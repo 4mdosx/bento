@@ -1,0 +1,25 @@
+{
+  "name": "@4mdosx/bento",
+  "version": "0.0.1",
+  "description": "Quick Start Kit for Web Applications",
+  "main": "index.js",
+  "bin": {
+    "bento": "cli/command.js"
+  },
+  "scripts": {
+    "dev": "cd dev && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "next",
+    "react",
+    "full-stack",
+    "template"
+  ],
+  "author": "4mdosx",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^12.1.0"
+  }
+}
