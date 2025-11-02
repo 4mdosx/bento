@@ -1,21 +1,8 @@
 # 🍱 Bento
 
-Bento 一个面向多 WebApp 与本地工具仓库的脚手架，支持“拷贝式”模板注入与增量升级。
-
-- 支持 Next.js 应用、通用 UI 组件、Middleware、安全头、工具类 CLI 等模板
-- 支持 init 初始化、add 注入、upgrade 升级、doctor 自检
-- UI底层由 shadcn 和 tailwind构 建，UI 可控，最大限度客制化。
-- 最小化选择项，提供开箱即用的开发体验
-- 内置本地化文档
-
-## 👥 使用者画像与场景
-
-### 使用者
-- 个人/小团队开发者，维护多个 Next WebApp 与若干 CLI/脚本工具
-
-### 典型场景
-- 快速制作项目原型
-- 对现有项目导入功能模块
+- 快速启动项目, 专注核心业务逻辑
+- 由 shadcn 和 tailwind 构建，源码级交付，UI 完全可控
+- 开箱即用、内置文档
 
 ## 📁 仓库结构
 
@@ -23,10 +10,9 @@ Bento 一个面向多 WebApp 与本地工具仓库的脚手架，支持“拷贝
 bento/
 ├── README.md           # 使用说明、命令手册、升级流程
 ├── package.json        # 提供 npx 脚手架命令
-├── cli/                # 脚手架实现（Node）
-├── scaffold/           # 开发工具
-├── templates/          # 可选模板
-├── docs/               # 项目文档
+├── cli/                # 提供 npx 脚手架命令（Node）
+├── youki/              # 项目核心代码 🗃️
+├── templates/          # 可选初始化模板
 ```
 
 ## 📂 templates 目录结构
@@ -63,17 +49,6 @@ bento add ui/calender
 bento add page/landing
 ```
 
-### 开发调试
-
-```bash
-# 进入开发环境
-cd dev
-npm run dev
-
-# 访问模板调试页面
-open http://localhost:3000/templates
-```
-
 ### Middleware 模板
 
 - **auth/**: 认证中间件配置，JWT token 验证，路由保护逻辑
@@ -106,6 +81,13 @@ bento add <template-name> [options]
 bento update <template-name> [options]
 ```
 
-访问 `http://localhost:4465/meta` 查看模板调试界面。
+## 开发调试
+
+```bash
+# clone this repon
+npm link
+npm run dev
+```
+
 
 
