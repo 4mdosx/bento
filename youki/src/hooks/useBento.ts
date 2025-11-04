@@ -1,5 +1,5 @@
 
-import { BentoContext } from '@/src/components/bento-provider'
+import { BentoContext } from '@/components/bento-provider'
 import { useContext } from 'react'
 
 export function useBento() {
