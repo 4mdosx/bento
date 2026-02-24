@@ -4,6 +4,14 @@
 - 由 shadcn 和 tailwind 构建，源码级交付，UI 完全可控
 - 开箱即用、内置文档
 
+## 开发
+
+启动 playground（组件展示与用例闭环）：
+
+```bash
+npm run dev -w playground
+```
+
 ## 📁 仓库结构
 
 ```
