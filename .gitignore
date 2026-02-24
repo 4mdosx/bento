@@ -47,3 +47,6 @@ local.remote.db
 roadmaps/
 # config
 .env
+
+# references
+references/
