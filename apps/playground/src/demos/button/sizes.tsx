@@ -7,7 +7,7 @@ const SIZES = ['sm', 'md', 'lg', 'icon'] as const
 export function ButtonSizesDemo() {
   return (
     <section className="space-y-4">
-      <h3 className="text-sm font-medium text-neutral-500">Sizes</h3>
+      <h3 className="text-body-sm font-medium text-muted">Sizes</h3>
       <div className="flex flex-wrap items-center gap-3">
         {SIZES.map((size) => (
           <Button
