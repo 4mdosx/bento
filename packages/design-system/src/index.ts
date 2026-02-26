@@ -1,6 +1,5 @@
 export {
-  Button as ButtonPrimitive,
-  type ButtonPrimitiveProps,
+  Button ,
+  type ButtonProps,
 } from './primitive'
-export * from './components'
 export * from './lib'
