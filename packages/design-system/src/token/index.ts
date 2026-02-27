@@ -1,3 +1,5 @@
+import { breakpointValues } from './breakpoints'
+
 /**
  * Design tokens：仅使用语义化 Tailwind 类名（bg-primary, text-muted, border-border 等），
  * 不直接使用 raw palette（如 bg-neutral-900、bg-red-600）。
@@ -24,4 +26,8 @@ export const tokens = {
     base:
       'inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   },
+  breakpoints: breakpointValues,
 } as const
+
+export { min, max, between, breakpointPx } from './breakpoints'
+export type { BreakpointName } from './breakpoints'

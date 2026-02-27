@@ -33,6 +33,12 @@
   --palette-red-600: #dc2626;
   --palette-red-700: #b91c1c;
   --palette-red-800: #991b1b;
+
+  /* Layout breakpoints (use in media queries: @media (min-width: var(--breakpoint-tablet)) { ... }) */
+  --breakpoint-mobile: 0px;
+  --breakpoint-tablet: 640px;
+  --breakpoint-screen: 1024px;
+  --breakpoint-large: 1440px;
 }
 
 @media (prefers-color-scheme: dark) {
