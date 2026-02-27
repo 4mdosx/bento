@@ -1,6 +1,5 @@
 import { BreakpointName, breakpointValues } from '../token/breakpoints'
 
-
 /** 生成 min-width 媒体查询字符串，用于 matchMedia 或 CSS-in-JS */
 export function min(name: BreakpointName): string {
   const px = breakpointValues[name]
@@ -24,3 +23,13 @@ export function between(
   if (maxPx === 0) return '(max-width: -1px)'
   return `(min-width: ${minPx}px) and (max-width: ${maxPx - 1}px)`
 }
+
+export const BREAKPOINT_ORDER: BreakpointName[] = ['large', 'screen', 'tablet', 'mobile']
+export function getCurrentBreakpoint(): BreakpointName {
+    if (typeof window === 'undefined') return 'mobile'
+    for (const name of BREAKPOINT_ORDER) {
+      if (window.matchMedia(min(name)).matches) return name
+    }
+    return 'mobile'
+  }
+  
