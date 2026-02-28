@@ -62,23 +62,21 @@ const ResponsiveLayout = React.forwardRef<HTMLElement, ResponsiveLayoutProps>(
     ref
   ) => {
     const breakpoint = useBreakpoint()
-    const slots: ResponsiveLayoutSlots = { mobile, tablet, screen, large }
+    const slots: ResponsiveLayoutSlots = { large, screen, tablet, mobile }
 
     const content = React.useMemo(() => {
-      const currentIndex = BREAKPOINT_ORDER.indexOf(breakpoint)
-      if (currentIndex === -1) return null
+      const currentIndex = BREAKPOINT_ORDER.indexOf(breakpoint) || 0
 
       if (fallback) {
-        for (let i = currentIndex; i >= 0; i--) {
+        for (let i = currentIndex; i < BREAKPOINT_ORDER.length; i++) {
           const name = BREAKPOINT_ORDER[i]
           const slot = slots[name as keyof ResponsiveLayoutSlots]
           if (slot != null) return slot
         }
-        return null
       }
 
       return slots[breakpoint] ?? null
-    }, [breakpoint, fallback, mobile, tablet, screen, large])
+    }, [breakpoint, fallback, large, screen, tablet, mobile])
 
     return (
       <Comp ref={ref} className={className} {...rest}>
