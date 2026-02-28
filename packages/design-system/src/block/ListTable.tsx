@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { ListContainerData } from '../pattern/composition/ListContainer'
 import { cn } from '../lib/cn'
 
 const tableClass = 'w-full text-left text-body-sm'
@@ -23,8 +22,6 @@ export interface ListTableProps<T = Record<string, unknown>>
   /** Field or function used as row key; defaults to 'id' */
   rowKey?: keyof T | ((row: T) => string | number)
   children?: React.ReactNode
-  /** 为 false 时仅渲染 table，不包一层 ListContainerData；用于放入 ListContainer.Data 的 tablet slot */
-  wrapInDataContainer?: boolean
 }
 
 function getRowKey<T>(row: T, rowKey: keyof T | ((row: T) => string | number)): string | number {
@@ -67,29 +64,19 @@ const tableContent = <T,>(
     </table>
   )
 
+/**
+ * Renders table only; wrap in ListDataSlot or ListContainer.Data when you need the data container.
+ */
 function ListTableInner<T>(
-  {
-    columns,
-    data,
-    rowKey = 'id' as keyof T,
-    className,
-    children,
-    wrapInDataContainer = true,
-    ...props
-  }: ListTableProps<T>,
+  { columns, data, rowKey = 'id' as keyof T, className, children, ...props }: ListTableProps<T>,
   ref: React.Ref<HTMLDivElement>,
 ) {
   const keyFn = typeof rowKey === 'function' ? rowKey : (row: T) => getRowKey(row, rowKey)
   const table = tableContent(columns, data, keyFn, children)
-
-  if (!wrapInDataContainer) {
-    return <>{table}</>
-  }
-
   return (
-    <ListContainerData ref={ref} className={cn(className)} {...props}>
+    <div ref={ref} className={cn(className)} {...props}>
       {table}
-    </ListContainerData>
+    </div>
   )
 }
 

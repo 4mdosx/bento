@@ -1,11 +1,34 @@
 'use client'
 
 import * as React from 'react'
-import {
-  ListContainerPagination,
-  useListPageStateContext,
-} from '../pattern/composition/ListContainer'
+import { Slot } from '@radix-ui/react-slot'
+import { useListPageStateContext } from '../pattern/composition/ListContainer'
 import { cn } from '../lib/cn'
+
+export const paginationClass =
+  'shrink-0 border-t border-border bg-muted/30 px-4 py-3 flex items-center justify-between gap-4'
+
+export interface ListPaginationSlotProps extends React.HTMLAttributes<HTMLDivElement> {
+  asChild?: boolean
+}
+
+/**
+ * Pagination slot: paging controls area, below the data container.
+ */
+const ListPaginationSlot = React.forwardRef<HTMLDivElement, ListPaginationSlotProps>(
+  ({ className, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'div'
+    return (
+      <Comp
+        ref={ref}
+        className={cn(paginationClass, className)}
+        data-list-pattern="pagination"
+        {...props}
+      />
+    )
+  },
+)
+ListPaginationSlot.displayName = 'ListPaginationSlot'
 
 const btnClass =
   'rounded border border-border px-2 py-1 text-body-sm hover:bg-muted/50'
@@ -37,9 +60,9 @@ const ListPagination = React.forwardRef<HTMLDivElement, ListPaginationProps>(
 
     if (!state) {
       return (
-        <ListContainerPagination ref={ref} className={cn(className)} {...props}>
+        <ListPaginationSlot ref={ref} className={cn(className)} {...props}>
           {fallback}
-        </ListContainerPagination>
+        </ListPaginationSlot>
       )
     }
 
@@ -47,7 +70,7 @@ const ListPagination = React.forwardRef<HTMLDivElement, ListPaginationProps>(
     const label = totalLabel.replace('{total}', String(total))
 
     return (
-      <ListContainerPagination ref={ref} className={cn(className)} {...props}>
+      <ListPaginationSlot ref={ref} className={cn(className)} {...props}>
         {children ?? (
           <>
             <span className="text-body-sm text-muted">{label}</span>
@@ -71,10 +94,10 @@ const ListPagination = React.forwardRef<HTMLDivElement, ListPaginationProps>(
             </div>
           </>
         )}
-      </ListContainerPagination>
+      </ListPaginationSlot>
     )
   },
 )
 ListPagination.displayName = 'ListPagination'
 
-export { ListPagination }
+export { ListPagination, ListPaginationSlot }

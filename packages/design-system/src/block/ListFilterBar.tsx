@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { ListContainerFilterBar } from '../pattern/composition/ListContainer'
+import { ListFilterBarSlot } from './ListFilterBarSlot'
 import { cn } from '../lib/cn'
 
 const inputClass =
@@ -62,7 +62,7 @@ const ListFilterBar = React.forwardRef<HTMLDivElement, ListFilterBarProps>(
     }
 
     return (
-      <ListContainerFilterBar ref={ref} className={cn(className)} {...props}>
+      <ListFilterBarSlot ref={ref} className={cn(className)} {...props}>
         {children ?? (
           <>
             <input
@@ -87,7 +87,7 @@ const ListFilterBar = React.forwardRef<HTMLDivElement, ListFilterBarProps>(
             )}
           </>
         )}
-      </ListContainerFilterBar>
+      </ListFilterBarSlot>
     )
   },
 )
