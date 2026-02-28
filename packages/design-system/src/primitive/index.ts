@@ -1,2 +1,2 @@
 export * from './Button'
-export * from './ResponsiveLayout'
+export * from '../pattern/layout/ResponsiveLayout'

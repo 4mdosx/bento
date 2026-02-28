@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { min, getCurrentBreakpoint, BREAKPOINT_ORDER } from '../lib/media'
-import type { BreakpointName } from '../token/breakpoints'
+import { min, getCurrentBreakpoint, BREAKPOINT_ORDER } from '../../lib/media'
+import type { BreakpointName } from '../../token/breakpoints'
 
 
 export function useBreakpoint(): BreakpointName {
