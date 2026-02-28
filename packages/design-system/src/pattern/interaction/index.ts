@@ -1,0 +1,1 @@
+export { useDetailState, DetailPresentation, type DetailStateProps } from './detailPresentation'

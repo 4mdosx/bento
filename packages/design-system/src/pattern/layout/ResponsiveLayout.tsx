@@ -5,8 +5,11 @@ import { min, getCurrentBreakpoint, BREAKPOINT_ORDER } from '../../lib/media'
 import type { BreakpointName } from '../../token/breakpoints'
 
 
+/** Default breakpoint for SSR and initial client render to avoid hydration mismatch. */
+const SSR_BREAKPOINT: BreakpointName = 'mobile'
+
 export function useBreakpoint(): BreakpointName {
-  const [breakpoint, setBreakpoint] = React.useState<BreakpointName>(getCurrentBreakpoint())
+  const [breakpoint, setBreakpoint] = React.useState<BreakpointName>(SSR_BREAKPOINT)
 
   React.useEffect(() => {
     const mediaQueries = BREAKPOINT_ORDER.map((name) => ({
