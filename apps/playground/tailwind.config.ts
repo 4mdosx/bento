@@ -4,6 +4,6 @@ export default {
   content: [
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-    '../../packages/design-system/src/**/*.{ts,tsx}',
+    '../../packages/bento-ui/src/**/*.{ts,tsx}',
   ],
 } satisfies Config

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from 'design-system'
+import { Button } from 'bento-ui'
 
 const VARIANTS = [
   'solid',

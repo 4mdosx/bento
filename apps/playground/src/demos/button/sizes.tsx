@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from 'design-system'
+import { Button } from 'bento-ui'
 
 const SIZES = ['sm', 'md', 'lg', 'icon'] as const
 

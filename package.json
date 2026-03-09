@@ -4,8 +4,7 @@
   "description": "Quick Start Kit for Web Applications",
   "main": "index.js",
   "scripts": {
-    "dev": "cd apps/playground && npm run dev",
-    "monitor": "cd apps/monitor && npm run dev",
+    "dev": "npm run dev -w playground",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -18,10 +17,16 @@
   "author": "4mdosx",
   "license": "ISC",
   "dependencies": {
-    "commander": "^12.1.0"
+    "commander": "^12.1.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "overrides": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
 }

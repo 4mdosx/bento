@@ -1,4 +1,5 @@
 import { useRouter, useSearchParams } from 'next/navigation'
+import { Modal, Drawer, BottomSheet } from '../../../infrastructure/overlay'
 import { useBreakpoint } from '../layout/ResponsiveLayout'
 
 interface DetailPresentationProps {
@@ -26,37 +27,46 @@ export function useDetailState(paramKey: string) {
 
 export interface DetailStateProps {
   id: string
+  onClose?: () => void
+  title?: string
   children: React.ReactNode
 }
 
-export function DetailPresentation({ id, children }: DetailStateProps) {
+export function DetailPresentation({ id, onClose, title = 'Detail', children }: DetailStateProps) {
   const breakpoint = useBreakpoint()
+  const open = Boolean(id)
+  const handleOpenChange = (next: boolean) => {
+    if (!next) onClose?.()
+  }
 
-  if (breakpoint === 'screen') {
+  if (breakpoint === 'screen' || breakpoint === 'large') {
     return (
-      <>
-        {/* <Modal open onClose={onClose}> */}
-        {children}
-        {/* </Modal> */}
-      </>
+      <Modal open={open} onOpenChange={handleOpenChange}>
+        <Modal.Content aria-describedby={undefined}>
+          <Modal.Title className="sr-only">{title}</Modal.Title>
+          {children}
+        </Modal.Content>
+      </Modal>
     )
   }
 
   if (breakpoint === 'tablet') {
     return (
-      <>
-        {/* <Drawer open onClose={onClose}> */}
-        {children}
-        {/* </Drawer> */}
-      </>
+      <Drawer open={open} onOpenChange={handleOpenChange}>
+        <Drawer.Content aria-describedby={undefined}>
+          <Drawer.Title className="sr-only">{title}</Drawer.Title>
+          {children}
+        </Drawer.Content>
+      </Drawer>
     )
   }
 
   return (
-    <>
-      {/* <BottomSheet open onClose={onClose}> */}
-      {children}
-      {/* </BottomSheet> */}
-    </>
+    <BottomSheet open={open} onOpenChange={handleOpenChange}>
+      <BottomSheet.Content aria-describedby={undefined} className="h-[90dvh] max-h-[90dvh]">
+        <BottomSheet.Title className="sr-only">{title}</BottomSheet.Title>
+        {children}
+      </BottomSheet.Content>
+    </BottomSheet>
   )
 }

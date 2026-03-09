@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "@radix-ui/themes": "^3.1.0",
-    "design-system": "file:../../packages/design-system",
+    "bento-ui": "file:../../packages/bento-ui",
     "next": "16.1.6",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

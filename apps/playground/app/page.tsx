@@ -6,7 +6,7 @@ export default function Page() {
     <div className="min-h-screen p-10">
       <header className="mb-10">
         <h1 className="text-heading-lg font-semibold text-foreground">Bento Playground</h1>
-        <p className="mt-1 text-body-sm text-muted">design-system → demos → playground</p>
+        <p className="mt-1 text-body-sm text-muted">bento-ui → demos → playground</p>
       </header>
       <main className="space-y-16">
         <ButtonDemo />

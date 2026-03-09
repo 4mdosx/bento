@@ -2,7 +2,7 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   /* config options here */
-  transpilePackages: ['design-system'],
+  transpilePackages: ['bento-ui'],
 }
 
 export default nextConfig
