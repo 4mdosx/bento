@@ -14,11 +14,18 @@ npm install
 npm run verify
 ```
 
-启动 playground（组件展示与用例闭环）：
+同时启动 playground 组件验证工作台与 docs：
 
 ```bash
-npm run dev -w playground
+npm run dev
 ```
+
+只启动单个应用可使用 `npm run dev:playground` 或 `npm run dev:docs`。
+联合启动默认使用 playground `3000`、docs `3001`；需要避让端口时可设置
+`PLAYGROUND_PORT` 与 `DOCS_PORT`。
+
+新组件必须遵循 `CONTRIBUTING.md` 与 `docs/component-development.md`：先确定 Use Case
+和交付边界，再实现契约、加入交互式 workbench、补齐自动门禁与文档。
 
 启动文档站（客户入门、AI 配方与冻结架构）：
 

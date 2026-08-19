@@ -10,7 +10,8 @@
     "npm": ">=11 <12"
   },
   "scripts": {
-    "dev": "npm run dev -w playground",
+    "dev": "node scripts/dev.mjs",
+    "dev:playground": "npm run dev -w playground",
     "dev:docs": "npm run dev -w docs",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run build -w bento-ui && npm run typecheck --workspaces --if-present",

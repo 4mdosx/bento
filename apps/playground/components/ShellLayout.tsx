@@ -10,6 +10,7 @@ import {
   OverlayProvider,
   useDashboardShell,
 } from 'bento-ui'
+import { componentCatalog } from '../src/catalog'
 
 function NavigationTrigger() {
   const { setAsideOpen } = useDashboardShell()
@@ -27,10 +28,9 @@ function NavigationTrigger() {
 }
 
 const links = [
-  ['/', 'Home'],
-  ['/button', 'Button'],
-  ['/list', 'List'],
-  ['/detail', 'Detail / Overlay'],
+  ['/', 'Workbench home'],
+  ...componentCatalog.map((item) => [item.href, item.name] as const),
+  ['/workflow', 'Development workflow'],
 ] as const
 
 function NavigationLink({ href, label }: { href: string; label: string }) {
@@ -65,7 +65,7 @@ export function ShellLayout({ children }: { children: React.ReactNode }) {
         </DashboardShell.Header>
         <DashboardShell.Body>
           <DashboardShell.Aside>
-            <nav className="flex flex-col gap-1 p-3" aria-label="Demo navigation">
+            <nav className="flex flex-col gap-1 p-3" aria-label="Validation navigation">
               {links.map(([href, label]) => (
                 <NavigationLink key={href} href={href} label={label} />
               ))}
