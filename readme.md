@@ -7,11 +7,26 @@
 
 ## 开发
 
+环境要求：Node.js 24、npm 11。首次检出后安装依赖并运行统一验证：
+
+```bash
+npm install
+npm run verify
+```
+
 启动 playground（组件展示与用例闭环）：
 
 ```bash
 npm run dev -w playground
 ```
+
+根级命令：
+
+- `npm run lint`：检查全部 workspace。
+- `npm run typecheck`：检查 TypeScript 类型。
+- `npm test`：运行现有自动化测试。
+- `npm run build`：执行生产构建。
+- `npm run verify`：依次执行以上全部质量门禁。
 
 ## 📁 仓库结构
 

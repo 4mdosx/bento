@@ -18,10 +18,20 @@ export interface OverlayRootProps {
 
 export function OverlayRoot({
   children,
-  container = typeof document !== 'undefined' ? document.body : null,
+  container,
   overlayContainerRef,
 }: OverlayRootProps) {
-  if (!container) return null
+  const [portalContainer, setPortalContainer] =
+    React.useState<HTMLElement | null>(null)
+
+  React.useEffect(() => {
+    setPortalContainer(container ?? document.body)
+  }, [container])
+
+  // Server rendering and the first client render must produce the same tree.
+  // Mount the portal only after hydration, when the browser container exists.
+  if (!portalContainer) return null
+
   return createPortal(
     <div
       ref={overlayContainerRef}
@@ -32,7 +42,7 @@ export function OverlayRoot({
     >
       <div className="pointer-events-auto contents">{children}</div>
     </div>,
-    container,
+    portalContainer,
   )
 }
 
