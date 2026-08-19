@@ -20,6 +20,16 @@ npm run verify
 npm run dev -w playground
 ```
 
+启动文档站（客户入门、AI 配方与冻结架构）：
+
+```bash
+npm run dev:docs
+```
+
+最小 MVP 路径：安装 `bento-ui@0.1.0-preview.0`，运行 `bento init` 与
+`bento add list`，定义 List Model/Actions，再由 ListHost 连接生成的 View。
+完整说明位于 `apps/docs`。
+
 根级命令：
 
 - `npm run lint`：检查全部 workspace。
