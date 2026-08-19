@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 const host = readFileSync('src/hosts/list/useListHost.ts', 'utf8')
-const demo = readFileSync('../../apps/playground/src/demos/list/ResourceListDemo.tsx', 'utf8')
+const demo = readFileSync('../../apps/docs/src/component-docs/examples/ResourceListExample.tsx', 'utf8')
 
 test('List Host cancels stale requests and ignores stale responses', () => {
   assert.match(host, /createLatestRequestCoordinator/)

@@ -11,6 +11,6 @@ export default function GettingStarted() {
     <section id="model"><h3>2. 定义业务 Model 与 Action</h3><pre><code>{model}</code></pre><p>Action 必须传递并响应 AbortSignal。不要在 View 中直接请求数据。</p></section>
     <section id="render"><h3>3. 将生成的 View 接到 Host</h3><pre><code>{render}</code></pre></section>
     <section id="verify"><h3>4. 验证交付</h3><pre><code>{'npm run typecheck\nnpm run build\nnpx bento diff list'}</code></pre><div className="rule">样式和结构修改生成的 View；状态、副作用和并发规则通过 Host 公共 API 配置。</div></section>
-    <p><Link href="/architecture">继续阅读冻结架构 →</Link></p>
+    <p><Link href="/overview/docs/zh/architecture">继续阅读架构说明 →</Link></p>
   </article></main>
 }

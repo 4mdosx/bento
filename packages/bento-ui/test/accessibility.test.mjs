@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
-const list = readFileSync('../../apps/playground/src/demos/list/ResourceListDemo.tsx', 'utf8')
+const list = readFileSync('../../apps/docs/src/component-docs/examples/ResourceListExample.tsx', 'utf8')
 const overlay = readFileSync('src/views/primitives/overlay/Modal.tsx', 'utf8')
 
 test('List MVP exposes names, status messages and table headers', () => {

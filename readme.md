@@ -14,20 +14,18 @@ npm install
 npm run verify
 ```
 
-同时启动 playground 组件验证工作台与 docs：
+启动统一 docs（包含使用说明、组件验证、项目定位与项目文档）：
 
 ```bash
 npm run dev
 ```
 
-只启动单个应用可使用 `npm run dev:playground` 或 `npm run dev:docs`。
-联合启动默认使用 playground `3000`、docs `3001`；需要避让端口时可设置
-`PLAYGROUND_PORT` 与 `DOCS_PORT`。
+`npm run dev` 与 `npm run dev:docs` 均启动 docs，默认地址为 `http://localhost:3000`。
 
-新组件必须遵循 `CONTRIBUTING.md` 与 `docs/component-development.md`：先确定 Use Case
-和交付边界，再实现契约、加入交互式 workbench、补齐自动门禁与文档。
+新组件必须遵循 `CONTRIBUTING.md` 与 `apps/docs/content/docs/contributing/component-development.md`：先确定 Use Case
+和交付边界，再实现契约、加入 spec 映射的可执行组件文档、补齐自动门禁与文档。
 
-启动文档站（客户入门、AI 配方与冻结架构）：
+启动文档站（使用说明、组件文档、项目定位与冻结架构）：
 
 ```bash
 npm run dev:docs
@@ -49,7 +47,7 @@ npm run dev:docs
 
 ```
 bento/
-├── apps/               # 文档、playground 与示例应用
+├── apps/docs/          # 文档站、可执行组件验证与示例
 ├── packages/bento-ui/  # Host、Next 集成、UI Runtime 和 View
 ├── cli/                # 当前 CLI 入口，后续迁移为 workspace package
 ├── roadmap/            # 本地开发计划，不进入 Git

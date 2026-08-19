@@ -10,7 +10,7 @@
       "dependencies": ["react", "bento-ui/core"],
       "exports": ["ListHost", "useListHost", "ListModel", "ListActions", "ListViewModel"],
       "propsSchema": "ListHostProps<Item>",
-      "examples": ["apps/playground/src/demos/list/ResourceListDemo.tsx"],
+      "examples": ["apps/docs/src/component-docs/examples/ResourceListExample.tsx"],
       "useCases": ["filterable-resource-list"]
     },
     {
@@ -21,7 +21,7 @@
       "dependencies": ["bento-ui/hosts/list"],
       "exports": ["ListView"],
       "propsSchema": "{ host: ListHostValue<Item>; renderItem(item): ReactNode }",
-      "examples": ["apps/playground/src/demos/list/ResourceListDemo.tsx"],
+      "examples": ["apps/docs/src/component-docs/examples/ResourceListExample.tsx"],
       "useCases": ["filterable-resource-list"]
     },
     {
@@ -32,7 +32,7 @@
       "dependencies": ["bento-ui/ui-runtime/overlay"],
       "exports": ["DetailView"],
       "propsSchema": "DetailPresentationProps",
-      "examples": ["apps/playground/src/demos/detail/DetailDemo.tsx"],
+      "examples": ["apps/docs/src/component-docs/examples/DetailExample.tsx"],
       "useCases": ["resource-detail"]
     },
     {
@@ -43,7 +43,7 @@
       "dependencies": ["react", "react-dom"],
       "exports": ["OverlayProvider", "OverlayRoot"],
       "propsSchema": "OverlayProviderProps",
-      "examples": ["apps/playground/src/demos/detail/DetailDemo.tsx"],
+      "examples": ["apps/docs/src/component-docs/examples/DetailExample.tsx"],
       "useCases": ["resource-detail"]
     },
     {
@@ -54,7 +54,7 @@
       "dependencies": [],
       "exports": ["DashboardShell"],
       "propsSchema": "DashboardShellProps",
-      "examples": ["apps/playground/components/ShellLayout.tsx"],
+      "examples": ["apps/docs/app/layout.tsx"],
       "useCases": ["application-shell"]
     }
   ]
