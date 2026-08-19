@@ -4,6 +4,12 @@
   "required": ["version", "items"],
   "properties": {
     "version": { "type": "integer" },
-    "items": { "type": "array" }
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "version", "dependencies", "files"]
+      }
+    }
   }
 }

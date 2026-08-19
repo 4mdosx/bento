@@ -4,7 +4,6 @@ const crypto = require('node:crypto')
 
 const root = path.resolve(__dirname, '../registry')
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'registry.json'), 'utf8'))
-
 const hash = (content) => crypto.createHash('sha256').update(content).digest('hex')
 
 function readConfig(cwd) {
@@ -13,7 +12,7 @@ function readConfig(cwd) {
   return JSON.parse(fs.readFileSync(configPath, 'utf8'))
 }
 
-function add(name, options = {}) {
+function plan(name, options = {}) {
   const cwd = path.resolve(options.cwd || process.cwd())
   const config = readConfig(cwd)
   const item = manifest.items.find((candidate) => candidate.name === name)
@@ -28,33 +27,59 @@ function add(name, options = {}) {
     const existing = fs.existsSync(target) ? fs.readFileSync(target, 'utf8') : null
     const previousHash = state.files[path.relative(cwd, target)]
     const modified = existing !== null && previousHash && hash(existing) !== previousHash
-    if (modified && !options.overwrite) return { action: 'conflict', target, source }
-    if (existing === source) return { action: 'unchanged', target, source }
-    return { action: existing === null ? 'create' : 'update', target, source }
+    const action = modified && !options.overwrite
+      ? 'conflict'
+      : existing === source ? 'unchanged' : existing === null ? 'create' : 'update'
+    return { action, target, source, existing }
   })
-  if (options.dryRun) return { item, operations }
-  const conflict = operations.find((operation) => operation.action === 'conflict')
-  if (conflict) {
-    throw new Error(`Local changes detected in ${conflict.target}; rerun with --overwrite after reviewing the diff.`)
-  }
-  for (const operation of operations) {
-    if (operation.action === 'unchanged') continue
-    fs.mkdirSync(path.dirname(operation.target), { recursive: true })
-    fs.writeFileSync(operation.target, operation.source)
-    state.files[path.relative(cwd, operation.target)] = hash(operation.source)
-  }
-  const packagePath = path.join(cwd, 'package.json')
-  if (fs.existsSync(packagePath) && item.dependencies.length) {
-    const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'))
-    packageJson.dependencies ||= {}
-    for (const dependency of item.dependencies) {
-      packageJson.dependencies[dependency] ||= dependency === 'bento-ui' ? '^0.0.1' : 'latest'
-    }
-    fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
-  }
-  fs.mkdirSync(path.dirname(statePath), { recursive: true })
-  fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`)
-  return { item, operations }
+  return { cwd, config, item, state, statePath, operations }
 }
 
-module.exports = { add, manifest }
+function add(name, options = {}) {
+  const result = plan(name, options)
+  if (options.dryRun) return result
+  const conflict = result.operations.find((operation) => operation.action === 'conflict')
+  if (conflict) throw new Error(`Local changes detected in ${conflict.target}; review with \`bento diff ${name}\` or use --overwrite.`)
+
+  const packagePath = path.join(result.cwd, 'package.json')
+  const packageBefore = fs.existsSync(packagePath) ? fs.readFileSync(packagePath, 'utf8') : null
+  const written = []
+  try {
+    for (const operation of result.operations) {
+      if (operation.action === 'unchanged') continue
+      fs.mkdirSync(path.dirname(operation.target), { recursive: true })
+      fs.writeFileSync(operation.target, operation.source)
+      written.push(operation)
+      result.state.files[path.relative(result.cwd, operation.target)] = hash(operation.source)
+    }
+    if (packageBefore !== null) {
+      const packageJson = JSON.parse(packageBefore)
+      packageJson.dependencies ||= {}
+      for (const [dependency, version] of Object.entries(result.item.dependencies)) {
+        packageJson.dependencies[dependency] ||= version
+      }
+      fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
+    }
+    fs.mkdirSync(path.dirname(result.statePath), { recursive: true })
+    fs.writeFileSync(result.statePath, `${JSON.stringify(result.state, null, 2)}\n`)
+  } catch (error) {
+    for (const operation of written.reverse()) {
+      if (operation.existing === null) fs.rmSync(operation.target, { force: true })
+      else fs.writeFileSync(operation.target, operation.existing)
+    }
+    if (packageBefore !== null) fs.writeFileSync(packagePath, packageBefore)
+    throw error
+  }
+  return result
+}
+
+function diff(name, options = {}) {
+  return plan(name, options).operations.map(({ action, target, existing, source }) => ({
+    action,
+    target,
+    currentHash: existing === null ? null : hash(existing),
+    registryHash: hash(source),
+  }))
+}
+
+module.exports = { add, diff, manifest, plan }
