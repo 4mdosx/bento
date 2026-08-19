@@ -46,7 +46,12 @@ export interface ListModel<Item> {
 
 export interface ListActions<Item> {
   query: BentoAction<ListQuery, ListResult<Item>>
-  row?: Readonly<Record<string, BentoAction<Item, void>>>
+  row?: Readonly<Record<string, ListRowAction<Item>>>
+}
+
+export interface ListRowAction<Item> {
+  run: BentoAction<Item, void>
+  optimistic?: (items: readonly Item[], item: Item) => readonly Item[]
 }
 
 export interface ListViewModel<Item> {
@@ -54,6 +59,7 @@ export interface ListViewModel<Item> {
   selectedKeys: ReadonlySet<ListItemKey>
   isLoading: boolean
   isRefreshing: boolean
+  pendingRowActions: ReadonlySet<string>
   isEmpty: boolean
   error: Error | null
 }

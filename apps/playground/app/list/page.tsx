@@ -1,4 +1,4 @@
-import { ListDemo } from '../../src/demos/list/ListDemo'
+import { ResourceListDemo } from '../../src/demos/list/ResourceListDemo'
 
 export default function ListPage() {
   return (
@@ -9,7 +9,7 @@ export default function ListPage() {
           Responsive List View with filter and paging parts.
         </p>
       </div>
-      <ListDemo />
+      <ResourceListDemo />
     </div>
   )
 }
