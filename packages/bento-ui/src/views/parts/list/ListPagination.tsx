@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
-import { useListPageStateContext } from '../../../hosts/list'
 import { cn } from '../../shared/cn'
 
 export const paginationClass =
@@ -36,14 +35,19 @@ const btnClass =
 export interface ListPaginationProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Label template; {total} is replaced with the total count */
   totalLabel?: string
-  /** Rendered when listPageState is not provided */
+  /** Rendered when total is not provided */
   fallback?: React.ReactNode
   /** When provided, replaces the default prev/next buttons */
   children?: React.ReactNode
+  total?: number
+  hasPreviousPage?: boolean
+  hasNextPage?: boolean
+  onPreviousPage?: () => void
+  onNextPage?: () => void
 }
 
 /**
- * Default pagination block: total label + prev/next. Requires listPageState from useListPageState via ListContainer.
+ * Default controlled pagination block: total label + previous/next actions.
  */
 const ListPagination = React.forwardRef<HTMLDivElement, ListPaginationProps>(
   (
@@ -52,13 +56,16 @@ const ListPagination = React.forwardRef<HTMLDivElement, ListPaginationProps>(
       totalLabel = '{total} items',
       fallback = null,
       children,
+      total,
+      hasPreviousPage = false,
+      hasNextPage = false,
+      onPreviousPage,
+      onNextPage,
       ...props
     },
     ref,
   ) => {
-    const state = useListPageStateContext()
-
-    if (!state) {
+    if (total === undefined) {
       return (
         <ListPaginationSlot ref={ref} className={cn(className)} {...props}>
           {fallback}
@@ -66,7 +73,6 @@ const ListPagination = React.forwardRef<HTMLDivElement, ListPaginationProps>(
       )
     }
 
-    const { total, hasPrevPage, hasNextPage, goPrev, goNext } = state
     const label = totalLabel.replace('{total}', String(total))
 
     return (
@@ -78,8 +84,8 @@ const ListPagination = React.forwardRef<HTMLDivElement, ListPaginationProps>(
               <button
                 type="button"
                 className={btnClass}
-                disabled={!hasPrevPage}
-                onClick={goPrev}
+                disabled={!hasPreviousPage}
+                onClick={onPreviousPage}
               >
                 Previous
               </button>
@@ -87,7 +93,7 @@ const ListPagination = React.forwardRef<HTMLDivElement, ListPaginationProps>(
                 type="button"
                 className={btnClass}
                 disabled={!hasNextPage}
-                onClick={goNext}
+                onClick={onNextPage}
               >
                 Next
               </button>

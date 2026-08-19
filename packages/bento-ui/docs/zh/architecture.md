@@ -35,7 +35,7 @@ packages/bento-ui/src/
 
 Host 管理 Use Case 的运行状态、View Model、异步副作用和标准交互，不包含 Tailwind class 或具体页面结构。
 
-当前 `hosts/list/ListPageState.tsx` 是 ListHost 的过渡实现。分页状态已从 List View 中移出，后续会在这里扩展 query、loading、empty、error、selection 和 actions。
+`hosts/list` 已提供 ListHost、统一 Query、异步协调、选择和 Row Action；View 只接收 View Model 与受控分页回调。
 
 ### integrations/next
 
@@ -106,7 +106,7 @@ hosts       ui-runtime       integrations/next
 用户代码优先从职责明确的子路径导入：
 
 ```ts
-import { useListPageState } from 'bento-ui/hosts/list'
+import { ListHost } from 'bento-ui/hosts/list'
 import { useDetailState } from 'bento-ui/integrations/next'
 import { OverlayProvider } from 'bento-ui/ui-runtime/overlay'
 import { ListContainer } from 'bento-ui/views'

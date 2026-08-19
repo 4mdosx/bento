@@ -10,6 +10,7 @@ import type {
   ListResult,
   ListViewModel,
 } from './contracts'
+import { createLatestRequestCoordinator } from './requestCoordinator'
 
 const toError = (value: unknown): Error =>
   value instanceof Error ? value : new Error(String(value))
@@ -19,6 +20,10 @@ export interface UseListHostOptions<Item> {
   actions: ListActions<Item>
   initialData?: ListResult<Item>
   onError?: (error: BentoError) => void
+  query?: ListQuery
+  onQueryChange?: (query: ListQuery) => void
+  initialDataPolicy?: 'fresh' | 'stale'
+  autoLoad?: boolean
 }
 
 export interface ListHostValue<Item> extends ListViewModel<Item> {
@@ -36,8 +41,13 @@ export function useListHost<Item>({
   actions,
   initialData,
   onError,
+  query: controlledQuery,
+  onQueryChange,
+  initialDataPolicy = 'fresh',
+  autoLoad = true,
 }: UseListHostOptions<Item>): ListHostValue<Item> {
-  const [query, setQuery] = React.useState(model.query)
+  const [internalQuery, setInternalQuery] = React.useState(model.query)
+  const query = controlledQuery ?? internalQuery
   const [result, setResult] = React.useState<ListResult<Item>>(
     initialData ?? { items: [] },
   )
@@ -54,8 +64,13 @@ export function useListHost<Item>({
       ? model.selection.defaultValue ?? new Set()
       : new Set(),
   )
-  const requestRef = React.useRef<AbortController | null>(null)
-  const requestIdRef = React.useRef(0)
+  const queryCoordinator = React.useRef(createLatestRequestCoordinator())
+  const executionId = React.useRef(0)
+  const rowControllers = React.useRef(new Set<AbortController>())
+  const actionsRef = React.useRef(actions)
+  const onErrorRef = React.useRef(onError)
+  actionsRef.current = actions
+  onErrorRef.current = onError
 
   const controlledSelection =
     model.selection && 'value' in model.selection ? model.selection : null
@@ -63,42 +78,51 @@ export function useListHost<Item>({
 
   const execute = React.useCallback(
     async (nextQuery: ListQuery, refresh = false) => {
-      requestRef.current?.abort()
-      const controller = new AbortController()
-      const requestId = ++requestIdRef.current
-      requestRef.current = controller
+      const currentExecution = ++executionId.current
       setError(null)
       refresh ? setRefreshing(true) : setLoading(true)
       try {
-        const next = await actions.query(nextQuery, { signal: controller.signal })
-        if (!controller.signal.aborted && requestId === requestIdRef.current) {
-          setResult(next)
-        }
+        const next = await queryCoordinator.current.run((signal) =>
+          Promise.resolve(actionsRef.current.query(nextQuery, { signal })),
+        )
+        if (next) setResult(next)
       } catch (cause) {
-        if (!controller.signal.aborted && requestId === requestIdRef.current) {
-          const nextError = toError(cause)
-          setError(nextError)
-          onError?.({
-            code: 'LIST_QUERY_FAILED',
-            message: nextError.message,
-            cause,
-            retryable: true,
-          })
-        }
+        const nextError = toError(cause)
+        setError(nextError)
+        onErrorRef.current?.({
+          code: 'LIST_QUERY_FAILED',
+          message: nextError.message,
+          cause,
+          retryable: true,
+        })
       } finally {
-        if (requestId === requestIdRef.current) {
+        if (currentExecution === executionId.current) {
           setLoading(false)
           setRefreshing(false)
         }
       }
     },
-    [actions, onError],
+    [],
   )
 
   React.useEffect(() => {
-    void execute(query)
-    return () => requestRef.current?.abort()
-  }, [execute, query])
+    if (autoLoad && (!initialData || initialDataPolicy === 'stale')) {
+      void execute(query)
+    } else {
+      setLoading(false)
+    }
+  }, [autoLoad, execute, initialData, initialDataPolicy, query])
+
+  React.useEffect(() => () => {
+    queryCoordinator.current.abort()
+    executionId.current += 1
+    for (const controller of rowControllers.current) controller.abort()
+  }, [])
+
+  const updateQuery = React.useCallback((next: ListQuery) => {
+    if (controlledQuery === undefined) setInternalQuery(next)
+    onQueryChange?.(next)
+  }, [controlledQuery, onQueryChange])
 
   const setSelected = React.useCallback(
     (key: ListItemKey, selected: boolean) => {
@@ -120,6 +144,7 @@ export function useListHost<Item>({
       const action = actions.row?.[name]
       if (!action) throw new Error(`Unknown row action: ${name}`)
       const controller = new AbortController()
+      rowControllers.current.add(controller)
       const key = `${name}:${model.getKey(item)}`
       const previous = result
       setPendingRowActions((current) => new Set(current).add(key))
@@ -138,6 +163,7 @@ export function useListHost<Item>({
         setError(nextError)
         throw nextError
       } finally {
+        rowControllers.current.delete(controller)
         setPendingRowActions((current) => {
           const next = new Set(current)
           next.delete(key)
@@ -160,7 +186,7 @@ export function useListHost<Item>({
     isEmpty: !isLoading && !error && result.items.length === 0,
     error,
     refresh: () => execute(query, true),
-    setQuery,
+    setQuery: updateQuery,
     setSelected,
     runRowAction,
   }

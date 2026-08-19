@@ -5,7 +5,6 @@ import {
   ListFilterBar,
   ListPagination,
   ListTable,
-  useListPageState,
 } from 'bento-ui'
 import type { ListTableColumn } from 'bento-ui/views'
 
@@ -27,10 +26,8 @@ const columns: ListTableColumn<DemoRow>[] = [
 ]
 
 export function ListDemo() {
-  const paging = useListPageState({ pageSize: 3, total: rows.length })
-
   return (
-    <ListContainer listPageState={paging}>
+    <ListContainer>
       <ListFilterBar searchPlaceholder="Search projects…" />
       <ListContainer.Data
         mobile={
@@ -45,7 +42,7 @@ export function ListDemo() {
         }
         tablet={<ListTable columns={columns} data={rows} />}
       />
-      <ListPagination />
+      <ListPagination total={rows.length} />
     </ListContainer>
   )
 }
