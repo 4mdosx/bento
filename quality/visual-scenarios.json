@@ -1,0 +1,10 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "scenarios": [
+    { "name": "list-mobile", "path": "/list", "width": 390, "height": 844, "expects": ["Resource cards", "Search resources"] },
+    { "name": "list-tablet", "path": "/list", "width": 768, "height": 1024, "expects": ["Resource table", "Search resources"] },
+    { "name": "list-desktop", "path": "/list", "width": 1440, "height": 900, "expects": ["Resource table", "Search resources"] },
+    { "name": "detail-mobile", "path": "/detail", "width": 390, "height": 844, "expects": ["Detail"] },
+    { "name": "detail-desktop", "path": "/detail", "width": 1440, "height": 900, "expects": ["Detail"] }
+  ]
+}

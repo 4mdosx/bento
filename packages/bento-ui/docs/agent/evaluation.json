@@ -5,6 +5,8 @@
     "success": true,
     "filesChanged": 1,
     "extraDependencies": 0,
-    "tokenMeasurement": "recorded by the evaluation runner when available"
+    "tokenMeasurement": "recorded by the evaluation runner when available",
+    "runner": "scripts/evaluate-agent.mjs",
+    "hostInternalsModified": false
   }
 }
