@@ -1,0 +1,23 @@
+const assert = require('node:assert/strict')
+const fs = require('node:fs')
+const os = require('node:os')
+const path = require('node:path')
+const test = require('node:test')
+const init = require('../init')
+const { add } = require('../registry')
+
+test('init and add are repeatable and protect local changes', () => {
+  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'bento-cli-'))
+  fs.writeFileSync(path.join(cwd, 'package.json'), '{"dependencies":{}}\n')
+  init('.', { cwd })
+  assert.equal(fs.existsSync(path.join(cwd, 'components/bento/theme.css')), true)
+  const first = add('list', { cwd })
+  assert.equal(first.operations[0].action, 'create')
+  assert.equal(JSON.parse(fs.readFileSync(path.join(cwd, 'package.json'))).dependencies['bento-ui'], '^0.0.1')
+  const second = add('list', { cwd })
+  assert.equal(second.operations[0].action, 'unchanged')
+  const target = second.operations[0].target
+  fs.appendFileSync(target, '\n// local change\n')
+  assert.throws(() => add('list', { cwd }), /Local changes detected/)
+  assert.equal(add('list', { cwd, dryRun: true }).operations[0].action, 'conflict')
+})

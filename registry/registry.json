@@ -1,0 +1,11 @@
+{
+  "$schema": "./registry.schema.json",
+  "version": 1,
+  "items": [
+    { "name": "button", "type": "primitive", "version": "1.0.0", "dependencies": ["@radix-ui/react-slot", "class-variance-authority"], "files": [{ "source": "button/Button.tsx", "target": "primitives/Button.tsx" }] },
+    { "name": "form", "type": "primitive", "version": "1.0.0", "dependencies": [], "files": [{ "source": "form/FormField.tsx", "target": "primitives/FormField.tsx" }] },
+    { "name": "list", "type": "view", "version": "1.0.0", "dependencies": ["bento-ui"], "files": [{ "source": "list/ListView.tsx", "target": "views/ListView.tsx" }] },
+    { "name": "dashboard-shell", "type": "view", "version": "1.0.0", "dependencies": [], "files": [{ "source": "dashboard-shell/DashboardShell.tsx", "target": "views/DashboardShell.tsx" }] },
+    { "name": "detail", "type": "view", "version": "1.0.0", "dependencies": ["bento-ui"], "files": [{ "source": "detail/DetailView.tsx", "target": "views/DetailView.tsx" }] }
+  ]
+}
