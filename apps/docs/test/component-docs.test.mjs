@@ -30,3 +30,10 @@ test('Monaco virtual types provide the React JSX runtime', () => {
   assert.match(editor, /declare module 'react\/jsx-runtime'/)
   assert.match(editor, /interface IntrinsicElements/)
 })
+
+test('Monaco overlays remain visible in constrained windows', () => {
+  const editor = readFileSync('src/component-docs/MonacoCodeEditor.tsx', 'utf8')
+  assert.match(editor, /fixedOverflowWidgets: true/)
+  assert.match(editor, /height="clamp\(440px, 65vh, 640px\)"/)
+  assert.match(editor, /hover: \{ above: false, sticky: true \}/)
+})

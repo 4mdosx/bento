@@ -49,7 +49,7 @@ export function MonacoCodeEditor({ slug, value, onChange }: { slug: string; valu
 
   return <Editor
     beforeMount={beforeMount}
-    height="360px"
+    height="clamp(440px, 65vh, 640px)"
     language="typescript"
     path={`file:///examples/${slug}.tsx`}
     theme="vs-dark"
@@ -65,6 +65,9 @@ export function MonacoCodeEditor({ slug, value, onChange }: { slug: string; valu
       wordWrap: 'on',
       scrollBeyondLastLine: false,
       automaticLayout: true,
+      fixedOverflowWidgets: true,
+      hover: { above: false, sticky: true },
+      ariaLabel: `${slug} component example editor`,
     }}
   />
 }
