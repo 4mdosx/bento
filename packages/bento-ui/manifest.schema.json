@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "capabilities"],
+  "properties": {
+    "version": { "type": "string" },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "layer", "delivery", "entry", "dependencies", "exports", "propsSchema", "examples", "useCases"]
+      }
+    }
+  }
+}

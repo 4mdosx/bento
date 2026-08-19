@@ -1,0 +1,28 @@
+{
+  "$schema": "./manifest.schema.json",
+  "version": "1.0.0",
+  "capabilities": [
+    {
+      "name": "list-host",
+      "layer": "host",
+      "delivery": "package",
+      "entry": "bento-ui/hosts/list",
+      "dependencies": ["react", "bento-ui/core"],
+      "exports": ["ListHost", "useListHost", "ListModel", "ListActions", "ListViewModel"],
+      "propsSchema": "ListHostProps<Item>",
+      "examples": ["apps/playground/src/demos/list/ResourceListDemo.tsx"],
+      "useCases": ["filterable-resource-list"]
+    },
+    {
+      "name": "list",
+      "layer": "view",
+      "delivery": "source",
+      "entry": "registry/list/ListView.tsx",
+      "dependencies": ["bento-ui/hosts/list"],
+      "exports": ["ListView"],
+      "propsSchema": "{ host: ListHostValue<Item>; renderItem(item): ReactNode }",
+      "examples": ["apps/playground/src/demos/list/ResourceListDemo.tsx"],
+      "useCases": ["filterable-resource-list"]
+    }
+  ]
+}

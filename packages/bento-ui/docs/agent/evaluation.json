@@ -1,0 +1,10 @@
+{
+  "taskSet": ["filterable-resource-list"],
+  "metrics": ["success", "filesChanged", "extraDependencies", "inputTokens", "outputTokens"],
+  "baseline": {
+    "success": true,
+    "filesChanged": 1,
+    "extraDependencies": 0,
+    "tokenMeasurement": "recorded by the evaluation runner when available"
+  }
+}

@@ -17,6 +17,7 @@
     "./ui-runtime": "./src/ui-runtime/index.ts",
     "./ui-runtime/overlay": "./src/ui-runtime/overlay/index.ts",
     "./views": "./src/views/index.ts",
+    "./manifest.json": "./manifest.json",
     "./theme.css": "./src/theme.css"
   },
   "dependencies": {
