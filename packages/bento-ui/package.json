@@ -10,6 +10,7 @@
   },
   "exports": {
     ".": "./src/index.ts",
+    "./core": "./src/core/index.ts",
     "./hosts": "./src/hosts/index.ts",
     "./hosts/list": "./src/hosts/list/index.ts",
     "./integrations/next": "./src/integrations/next/index.ts",
