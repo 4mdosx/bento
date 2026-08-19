@@ -1,16 +1,15 @@
 # 快速开始
 
-Intent（行为动机）
-↓
-Use Case（使用场景）
-↓
-Pattern（结构模型）
-↓
-Block（结构区块）
-↓
-Primitive（基础单元）
-↓
-Token（视觉变量）
+本项目是 Application UI Toolkit，不使用单一层级链解释全部概念。开发流程由四个坐标共同确定：
+
+Bento 当前只支持 Next.js App Router。代码结构与依赖限制见 [architecture.md](./architecture.md)。
+
+1. 产品语义：Intent → Use Case。
+2. 体验方案：Use Case → Pattern（Composition + Interaction + Adaptation）。
+3. 运行架构：Domain Model + Actions → Host → View Contract。
+4. 视图实现：View → Part / Slot → Primitive，Token 横向约束视图。
+
+详细定义见 [concepts.md](./concepts.md)。
 
 # Intent（行为层）
 
@@ -26,35 +25,29 @@ Intent 的具体化：
 编辑配置
 带业务语义，但不涉及界面结构。
 
-# Pattern（结构模型层）
+# Pattern（体验方案）
 
-设计系统提供第一个 UI 抽象层， 表示稳定的模型。
-分为 Composition Pattern 和 Interaction Pattern 模型。
-分别用来组织页面元素的位置和交互流程。提供实现的组合性。
+Pattern 表示解决一类 Use Case 的稳定体验方案，由 Composition、Interaction 和 Adaptation 共同组成。
 
-# Block（页面区块层）
+# Part 与 Slot（视图组合）
 
 例如一个 List Composition Pattern 可拆分为：
 Filter Bar
 Data Table
 Info Section
 Action Footer
-Block 表示可组合的结构块，是结构片段，而非组件。
+Part 表示 View 中具有稳定语义的区域；Slot 是替换或注入 Part 的接口。React Component 是实现机制，不是架构层级。
 
-# Primitive（基础布局层）
-Stack
-Inline
-Grid
-Text
-Surface
-Divider
-表示最小结构单位。
+# Primitive（基础视图单元）
+
+Primitive 是不包含业务语义的最小可复用 View 单元，包括布局、控件和反馈三类，例如 Stack、Grid、Surface、Button、Input、Spinner。
 
 # Token（视觉变量层）
 
 spacing、color、radius、shadow。
-全局的唯一变量，提供视觉一致性。
+Token 横向作用于 Primitive、Part 和完整 View，提供视觉一致性；它不是组件层级的末端。
 
-# 为什么不用 Component
+# 交付方式
 
-在 React 生态中，Component 是开发者自定义的抽象单位，可能对应 Container、View、Hook、Page、Widget 等概念；各团队对 Component 的粒度定义不同。开发者可按自身需求，将 Component 层置于 Primitive 与 Pattern 之间。
+- View、Part、Primitive：CLI 写入用户源码。
+- Host、Core、Adapter、UI Runtime：通过包使用。

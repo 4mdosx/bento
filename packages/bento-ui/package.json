@@ -6,14 +6,25 @@
   "types": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./hosts": "./src/hosts/index.ts",
+    "./hosts/list": "./src/hosts/list/index.ts",
+    "./integrations/next": "./src/integrations/next/index.ts",
+    "./ui-runtime": "./src/ui-runtime/index.ts",
+    "./ui-runtime/overlay": "./src/ui-runtime/overlay/index.ts",
+    "./views": "./src/views/index.ts",
     "./theme.css": "./src/theme.css"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
-    "@radix-ui/react-dialog":"^1.1.4",
+    "@radix-ui/react-dialog": "^1.1.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.344.0",
     "tailwind-merge": "^2.2.0"
+  },
+  "peerDependencies": {
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }

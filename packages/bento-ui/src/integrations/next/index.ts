@@ -1,0 +1,1 @@
+export { useDetailState } from './useDetailRouteState'
