@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { componentCatalog } from '../../../src/component-docs/catalog'
+import { DesignTokenOverview } from '../../../src/component-docs/DesignTokenOverview'
 import { ExecutableComponentDoc } from '../../../src/component-docs/ExecutableComponentDoc'
 import { getDoc, getDocEntries, resolveDocHref } from '../../../src/content/docs'
 
@@ -10,6 +11,7 @@ export async function generateStaticParams() {
   const docs = await getDocEntries()
   return [
     { slug: [] },
+    { slug: ['tokens'] },
     ...componentCatalog.map((component) => ({ slug: ['components', component.slug] })),
     ...docs.map((doc) => ({ slug: ['docs', ...doc.slug] })),
   ]
@@ -25,15 +27,17 @@ export default async function OverviewPage({ params }: { params: Promise<{ slug?
   const activeHref = `/overview/${slug.join('/')}`.replace(/\/$/, '') || '/overview'
   const docSections = Array.from(new Set(docs.map((doc) => doc.section)))
   const isComponent = slug[0] === 'components' && slug.length === 2
+  const isTokens = slug.length === 1 && slug[0] === 'tokens'
   const docSlug = slug[0] === 'docs' ? slug.slice(1) : []
   const doc = docSlug.length ? await getDoc(docSlug) : null
 
-  if (slug.length && !isComponent && !doc) notFound()
+  if (slug.length && !isComponent && !isTokens && !doc) notFound()
   if (isComponent && !componentCatalog.some((item) => item.slug === slug[1])) notFound()
 
   return <main className="overview-layout">
     <aside className="overview-nav" aria-label="文档导航">
       <Link className={activeHref === '/overview' ? 'active overview-home' : 'overview-home'} href="/overview">概览</Link>
+      <section><h2>Design system</h2><Link className={activeHref === '/overview/tokens' ? 'active' : ''} href="/overview/tokens">Design tokens</Link></section>
       <section><h2>组件</h2>{componentCatalog.map((item) => {
         const href = `/overview/components/${item.slug}`
         return <Link className={activeHref === href ? 'active' : ''} href={href} key={item.slug}>{item.name}</Link>
@@ -46,6 +50,7 @@ export default async function OverviewPage({ params }: { params: Promise<{ slug?
 
     <div className="overview-content">
       {!slug.length ? <OverviewIndex docsCount={docs.length} /> : null}
+      {isTokens ? <DesignTokenOverview /> : null}
       {isComponent ? <ExecutableComponentDoc slug={slug[1]} embedded /> : null}
       {doc ? <article className="markdown-body"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: ({ href, children, ...props }) => <a href={resolveDocHref(href, docSlug)} {...props}>{children}</a> }}>{doc.source}</ReactMarkdown></article> : null}
     </div>

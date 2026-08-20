@@ -2,6 +2,7 @@
 
 import { Button } from 'bento-ui'
 import type { ComponentDefinition, ComponentSpec } from './types'
+import { buttonTokens, detailTokens, listTokens } from './design-tokens'
 import { DetailExample } from './examples/DetailExample'
 import { ResourceListExample } from './examples/ResourceListExample'
 
@@ -42,6 +43,7 @@ export const componentDefinitions: ComponentDefinition[] = [
     slug: 'button', name: 'Button', group: 'Primitive', maturity: 'ready',
     description: 'Variants, sizes, labels and disabled behavior.',
     checks: ['All variants render', 'Keyboard focus is visible', 'Disabled state blocks interaction'],
+    tokens: buttonTokens,
     fields: [
       { key: 'variant', label: 'Variant', kind: 'select', options: ['solid', 'outline', 'ghost', 'destructive', 'link'].map((value) => ({ label: value, value })) },
       { key: 'size', label: 'Size', kind: 'select', options: ['sm', 'md', 'lg', 'icon'].map((value) => ({ label: value, value })) },
@@ -62,6 +64,7 @@ export const componentDefinitions: ComponentDefinition[] = [
     slug: 'list', name: 'List Host', group: 'Host + View', maturity: 'preview',
     description: 'Search, lifecycle states and responsive presentation.',
     checks: ['Search updates results', 'Loading and empty states are announced', 'Mobile and desktop views preserve meaning'],
+    tokens: listTokens,
     fields: [
       { key: 'search', label: 'Search', kind: 'text' },
       { key: 'state', label: 'State', kind: 'select', options: ['success', 'loading', 'empty'].map((value) => ({ label: value, value })) },
@@ -80,6 +83,7 @@ export const componentDefinitions: ComponentDefinition[] = [
     slug: 'detail', name: 'Detail / Overlay', group: 'Pattern + Runtime', maturity: 'preview',
     description: 'Adaptive overlay presentation and open state.',
     checks: ['Trigger opens detail', 'Escape closes the overlay', 'Focus returns to the trigger'],
+    tokens: detailTokens,
     fields: [
       { key: 'title', label: 'Title', kind: 'text' },
       { key: 'open', label: 'Initially open', kind: 'boolean' },

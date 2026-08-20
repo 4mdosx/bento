@@ -16,6 +16,15 @@ export interface SpecField {
   help?: string
 }
 
+export type DesignTokenKind = 'color' | 'typography' | 'radius' | 'spacing' | 'breakpoint'
+
+export interface DesignToken {
+  name: string
+  kind: DesignTokenKind
+  value: string
+  description: string
+}
+
 export interface ComponentDefinition {
   slug: string
   name: string
@@ -23,6 +32,7 @@ export interface ComponentDefinition {
   maturity: 'ready' | 'preview'
   description: string
   checks: string[]
+  tokens: DesignToken[]
   fields: SpecField[]
   defaultSpec: ComponentSpec
   toCode: (spec: ComponentSpec) => string
