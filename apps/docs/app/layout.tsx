@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { SiteFooter, SiteHeader } from '../components/bento/views/Documentation'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -16,11 +17,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="zh-CN"><body>
-    <header className="site-header">
+    <SiteHeader>
       <Link className="brand" href="/"><span aria-hidden="true">🍱</span> Bento</Link>
       <nav aria-label="主导航"><Link href="/getting-started">开始使用</Link><Link href="/overview">文档与组件</Link></nav>
-    </header>
+    </SiteHeader>
     {children}
-    <footer><span>Bento UI 0.1 Preview</span><span>Next.js App Router only</span></footer>
+    <SiteFooter><span>Bento UI 0.1 Preview</span><span>Next.js App Router only</span></SiteFooter>
   </body></html>
 }

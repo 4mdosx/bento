@@ -55,10 +55,14 @@ function add(name, options = {}) {
     if (packageBefore !== null) {
       const packageJson = JSON.parse(packageBefore)
       packageJson.dependencies ||= {}
+      let packageChanged = false
       for (const [dependency, version] of Object.entries(result.item.dependencies)) {
-        packageJson.dependencies[dependency] ||= version
+        if (!packageJson.dependencies[dependency]) {
+          packageJson.dependencies[dependency] = version
+          packageChanged = true
+        }
       }
-      fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
+      if (packageChanged) fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
     }
     fs.mkdirSync(path.dirname(result.statePath), { recursive: true })
     fs.writeFileSync(result.statePath, `${JSON.stringify(result.state, null, 2)}\n`)

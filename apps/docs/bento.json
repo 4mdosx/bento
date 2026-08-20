@@ -1,0 +1,6 @@
+{
+  "$schema": "https://bento-ui.dev/schema.json",
+  "sourceDir": "components/bento",
+  "styleFile": "app/globals.css",
+  "importAlias": "@/"
+}

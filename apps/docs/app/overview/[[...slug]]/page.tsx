@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { DocsSidebar, Page } from '../../../components/bento/views/Documentation'
 import { componentCatalog } from '../../../src/component-docs/catalog'
 import { DesignTokenOverview } from '../../../src/component-docs/DesignTokenOverview'
 import { ExecutableComponentDoc } from '../../../src/component-docs/ExecutableComponentDoc'
@@ -34,8 +35,8 @@ export default async function OverviewPage({ params }: { params: Promise<{ slug?
   if (slug.length && !isComponent && !isTokens && !doc) notFound()
   if (isComponent && !componentCatalog.some((item) => item.slug === slug[1])) notFound()
 
-  return <main className="overview-layout">
-    <aside className="overview-nav" aria-label="文档导航">
+  return <Page className="overview-layout">
+    <DocsSidebar label="文档导航">
       <Link className={activeHref === '/overview' ? 'active overview-home' : 'overview-home'} href="/overview">概览</Link>
       <section><h2>Design system</h2><Link className={activeHref === '/overview/tokens' ? 'active' : ''} href="/overview/tokens">Design tokens</Link></section>
       <section><h2>组件</h2>{componentCatalog.map((item) => {
@@ -46,7 +47,7 @@ export default async function OverviewPage({ params }: { params: Promise<{ slug?
         const href = `/overview/docs/${entry.slug.join('/')}`
         return <Link className={activeHref === href ? 'active' : ''} href={href} key={href}>{entry.title}</Link>
       })}</section>)}
-    </aside>
+    </DocsSidebar>
 
     <div className="overview-content">
       {!slug.length ? <OverviewIndex docsCount={docs.length} /> : null}
@@ -54,7 +55,7 @@ export default async function OverviewPage({ params }: { params: Promise<{ slug?
       {isComponent ? <ExecutableComponentDoc slug={slug[1]} embedded /> : null}
       {doc ? <article className="markdown-body"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{ a: ({ href, children, ...props }) => <a href={resolveDocHref(href, docSlug)} {...props}>{children}</a> }}>{doc.source}</ReactMarkdown></article> : null}
     </div>
-  </main>
+  </Page>
 }
 
 function OverviewIndex({ docsCount }: { docsCount: number }) {

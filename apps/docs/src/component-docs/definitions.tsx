@@ -18,6 +18,16 @@ function booleanAttribute(code: string, name: string) {
   return match[1] === 'true'
 }
 
+function optionalBooleanAttribute(code: string, name: string, fallback = false) {
+  const match = code.match(new RegExp(`${name}=\\{(true|false)\\}`))
+  return match ? match[1] === 'true' : fallback
+}
+
+function optionalStringAttribute(code: string, name: string, fallback: string) {
+  const match = code.match(new RegExp(`${name}=["']([^"']*)["']`))
+  return match?.[1] ?? fallback
+}
+
 function assertOption(value: string, options: readonly string[], name: string) {
   if (!options.includes(value)) throw new Error(`${name} 不支持 “${value}”`)
   return value
@@ -26,11 +36,11 @@ function assertOption(value: string, options: readonly string[], name: string) {
 function ButtonPreview({ spec }: { spec: ComponentSpec }) {
   return (
     <Button
-      variant={spec.variant as 'solid' | 'outline' | 'ghost' | 'destructive' | 'link'}
-      size={spec.size as 'sm' | 'md' | 'lg' | 'icon'}
+      type={spec.type as 'button' | 'submit' | 'reset'}
+      loading={Boolean(spec.loading)}
       disabled={Boolean(spec.disabled)}
     >
-      {String(spec.label)}
+      {String(spec.content)}
     </Button>
   )
 }
@@ -40,30 +50,46 @@ function DetailPreview({ spec }: { spec: ComponentSpec }) { return <DetailExampl
 
 export const componentDefinitions: ComponentDefinition[] = [
   {
-    slug: 'button', name: 'Button', group: 'Primitive', maturity: 'ready',
-    description: 'Variants, sizes, labels and disabled behavior.',
-    checks: ['All variants render', 'Keyboard focus is visible', 'Disabled state blocks interaction'],
+    slug: 'button', name: 'Button', version: '1.1.0',
+    dimensions: ['Primitive', 'Control', 'Source'],
+    summary: [
+      'A dependable action control with native semantics and styling freedom.',
+      'Ship async actions without duplicate submissions or inaccessible state.',
+    ],
+    highlights: [
+      { title: 'Style without API churn', description: 'Default tokens provide a baseline; className owns Tailwind overrides.' },
+      { title: 'Native by default', description: 'Disabled, keyboard focus and button type retain platform semantics.' },
+      { title: 'Safe async actions', description: 'Loading announces busy state and blocks repeated activation.' },
+    ],
     tokens: buttonTokens,
     fields: [
-      { key: 'variant', label: 'Variant', kind: 'select', options: ['solid', 'outline', 'ghost', 'destructive', 'link'].map((value) => ({ label: value, value })) },
-      { key: 'size', label: 'Size', kind: 'select', options: ['sm', 'md', 'lg', 'icon'].map((value) => ({ label: value, value })) },
-      { key: 'label', label: 'Label', kind: 'text' },
+      { key: 'content', label: 'Content', kind: 'text' },
+      { key: 'type', label: 'Type', kind: 'select', options: ['button', 'submit', 'reset'].map((value) => ({ label: value, value })) },
+      { key: 'loading', label: 'Loading', kind: 'boolean' },
       { key: 'disabled', label: 'Disabled', kind: 'boolean' },
     ],
-    defaultSpec: { variant: 'solid', size: 'md', label: 'Save changes', disabled: false },
-    toCode: (spec) => `import { Button } from 'bento-ui'\n\nexport function Example() {\n  return (\n    <Button variant=${JSON.stringify(spec.variant)} size=${JSON.stringify(spec.size)} disabled={${Boolean(spec.disabled)}}>\n      ${String(spec.label)}\n    </Button>\n  )\n}`,
+    defaultSpec: { content: 'Save changes', type: 'button', loading: false, disabled: false },
+    toCode: (spec) => `import { Button } from 'bento-ui'\n\nexport function Example() {\n  return (\n    <Button\n      type=${JSON.stringify(spec.type)}\n      loading={${Boolean(spec.loading)}}\n      disabled={${Boolean(spec.disabled)}}\n      className="rounded-full"\n    >\n      ${String(spec.content)}\n    </Button>\n  )\n}`,
     fromCode: (code) => ({
-      variant: assertOption(stringAttribute(code, 'variant'), ['solid', 'outline', 'ghost', 'destructive', 'link'], 'variant'),
-      size: assertOption(stringAttribute(code, 'size'), ['sm', 'md', 'lg', 'icon'], 'size'),
-      disabled: booleanAttribute(code, 'disabled'),
-      label: code.match(/<Button[^>]*>\s*([^<{][\s\S]*?)\s*<\/Button>/)?.[1]?.trim() || (() => { throw new Error('Button 需要文本内容') })(),
+      type: assertOption(optionalStringAttribute(code, 'type', 'button'), ['button', 'submit', 'reset'], 'type'),
+      loading: optionalBooleanAttribute(code, 'loading'),
+      disabled: optionalBooleanAttribute(code, 'disabled'),
+      content: code.match(/<Button[^>]*>\s*([^<{][\s\S]*?)\s*<\/Button>/)?.[1]?.trim() || (() => { throw new Error('Button 需要文本内容') })(),
     }),
     Preview: ButtonPreview,
   },
   {
-    slug: 'list', name: 'List Host', group: 'Host + View', maturity: 'preview',
-    description: 'Search, lifecycle states and responsive presentation.',
-    checks: ['Search updates results', 'Loading and empty states are announced', 'Mobile and desktop views preserve meaning'],
+    slug: 'list', name: 'List Host', version: '1.0.0',
+    dimensions: ['Host', 'Interaction', 'Adaptation'],
+    summary: [
+      'Search, lifecycle states and responsive presentation.',
+      'Coordinate the complete lifecycle of a responsive resource collection.',
+    ],
+    highlights: [
+      { title: 'Query lifecycle', description: 'Search, loading, empty and error states share one Host contract.' },
+      { title: 'Race-safe requests', description: 'Cancellation and latest-request-wins behavior are built in.' },
+      { title: 'Adaptive presentation', description: 'Mobile lists and desktop tables preserve the same meaning.' },
+    ],
     tokens: listTokens,
     fields: [
       { key: 'search', label: 'Search', kind: 'text' },
@@ -80,9 +106,17 @@ export const componentDefinitions: ComponentDefinition[] = [
     Preview: ListPreview,
   },
   {
-    slug: 'detail', name: 'Detail / Overlay', group: 'Pattern + Runtime', maturity: 'preview',
-    description: 'Adaptive overlay presentation and open state.',
-    checks: ['Trigger opens detail', 'Escape closes the overlay', 'Focus returns to the trigger'],
+    slug: 'detail', name: 'Detail / Overlay', version: '1.0.0',
+    dimensions: ['Pattern', 'Adaptation', 'UI Runtime'],
+    summary: [
+      'Adaptive overlay presentation and open state.',
+      'Present focused detail in the right container for each viewport.',
+    ],
+    highlights: [
+      { title: 'Adaptive container', description: 'Bottom Sheet, Drawer and Modal follow the shared breakpoint contract.' },
+      { title: 'Accessible focus', description: 'Focus is contained while open and restored to the trigger on close.' },
+      { title: 'Predictable dismissal', description: 'Escape and overlay dismissal use the shared UI Runtime.' },
+    ],
     tokens: detailTokens,
     fields: [
       { key: 'title', label: 'Title', kind: 'text' },

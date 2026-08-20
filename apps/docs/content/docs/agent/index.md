@@ -8,4 +8,4 @@
 
 禁止修改或复制 Host 内部以定制外观；禁止自行建立第二套请求取消、Overlay、断点或 Token 基础设施。需要改变行为时优先使用公共契约，缺失能力应作为 API 需求提出。
 
-当前固定配方：[`创建可筛选资源列表`](./recipes/filterable-resource-list.md)。
+当前配方：[`创建可筛选资源列表`](./recipes/filterable-resource-list.md)、[`使用 Bento 自举文档站`](./recipes/documentation-site.md)。

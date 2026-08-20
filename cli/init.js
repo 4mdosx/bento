@@ -22,7 +22,7 @@ function init(projectName, options = {}) {
   const themePath = path.join(cwd, config.sourceDir, 'theme.css')
   if (!fs.existsSync(themePath)) {
     fs.mkdirSync(path.dirname(themePath), { recursive: true })
-    fs.writeFileSync(themePath, ':root { --bento-radius: 0.5rem; --bento-border: #e5e7eb; }\n')
+    fs.writeFileSync(themePath, '@import "bento-ui/theme.css";\n\n/* Override semantic tokens for this application below. */\n')
   }
   return { action: fs.existsSync(configPath) ? 'ready' : 'create', path: configPath }
 }

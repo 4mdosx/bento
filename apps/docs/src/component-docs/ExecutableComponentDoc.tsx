@@ -36,8 +36,18 @@ function ExecutableComponentLab({ definition, embedded }: { definition: Componen
   const Root = embedded ? 'div' : 'main'
   return <Root className="component-page">
     <header className="component-heading">
-      <div><span className="eyebrow">{definition.group} · {definition.maturity}</span><h1>{definition.name}</h1><p className="lead">{definition.description}</p></div>
-      <ul>{definition.checks.map((check) => <li key={check}>{check}</li>)}</ul>
+      <div className="component-identity">
+        <div className="component-meta">
+          <div className="dimension-tags" aria-label="Component dimensions">{definition.dimensions.map((dimension) => <span key={dimension}>{dimension}</span>)}</div>
+          <span className="component-version">v{definition.version}</span>
+        </div>
+        <h1>{definition.name}</h1>
+        <ul className="component-summary">{definition.summary.map((item) => <li key={item}>{item}</li>)}</ul>
+      </div>
+      <aside className="component-intro" aria-label={`${definition.name} introduction`}>
+        <h2 className="component-intro-label">How to use</h2>
+        <ol>{definition.highlights.map((highlight) => <li key={highlight.title}><strong>{highlight.title}</strong><span>{highlight.description}</span></li>)}</ol>
+      </aside>
     </header>
 
     <section className="preview-stage" aria-label={`${definition.name} preview`}>

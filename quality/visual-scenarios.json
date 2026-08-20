@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:3000",
   "scenarios": [
+    { "name": "button-states", "path": "/overview/components/button", "width": 1024, "height": 900, "expects": ["Button", "Loading", "Disabled"] },
     { "name": "list-mobile", "path": "/list", "width": 390, "height": 844, "expects": ["Resource cards", "Search resources"] },
     { "name": "list-tablet", "path": "/list", "width": 768, "height": 1024, "expects": ["Resource table", "Search resources"] },
     { "name": "list-desktop", "path": "/list", "width": 1440, "height": 900, "expects": ["Resource table", "Search resources"] },

@@ -18,9 +18,10 @@ declare module 'react/jsx-runtime' {
 }
 declare module 'bento-ui' {
   export interface ButtonProps {
-    variant?: 'solid' | 'outline' | 'ghost' | 'destructive' | 'link'
-    size?: 'sm' | 'md' | 'lg' | 'icon'
+    type?: 'button' | 'submit' | 'reset'
+    loading?: boolean
     disabled?: boolean
+    className?: string
     children?: import('react').ReactNode
   }
   export function Button(props: ButtonProps): import('react').ReactNode

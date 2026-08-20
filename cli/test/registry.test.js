@@ -25,3 +25,22 @@ test('init and add are repeatable and protect local changes', () => {
   assert.equal(doctor({ cwd }).ok, true)
   assert.ok(manifest.items.some((item) => item.name === 'list'))
 })
+
+test('init links the default theme and documentation source is Registry-delivered', () => {
+  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'bento-docs-'))
+  fs.writeFileSync(path.join(cwd, 'package.json'), '{"dependencies":{"next":"16.1.6","bento-ui":"^0.1.0-preview.0"}}\n')
+  init('.', { cwd })
+  assert.equal(fs.readFileSync(path.join(cwd, 'components/bento/theme.css'), 'utf8').startsWith('@import "bento-ui/theme.css";'), true)
+  const result = add('documentation', { cwd })
+  assert.equal(result.operations[0].action, 'create')
+  assert.equal(fs.existsSync(path.join(cwd, 'components/bento/views/Documentation.tsx')), true)
+})
+
+test('button source exposes functional state without appearance variants', () => {
+  const item = manifest.items.find((candidate) => candidate.name === 'button')
+  const source = fs.readFileSync(path.join(__dirname, '../../registry/button/Button.tsx'), 'utf8')
+  assert.deepEqual(item.dependencies, { '@radix-ui/react-slot': '^1.2.4' })
+  assert.match(source, /loading\?: boolean/)
+  assert.match(source, /aria-busy/)
+  assert.doesNotMatch(source, /variant\?:|size\?:|class-variance-authority/)
+})

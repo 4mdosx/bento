@@ -13,6 +13,27 @@ test('existing component scenarios are represented in executable docs', () => {
   assert.match(workbench, /MonacoCodeEditor/)
 })
 
+test('button spec models behavior while className owns appearance', () => {
+  assert.match(definitions, /key: 'loading'/)
+  assert.match(definitions, /key: 'disabled'/)
+  assert.match(definitions, /key: 'type'/)
+  assert.match(definitions, /className="rounded-full"/)
+  assert.doesNotMatch(definitions, /key: 'variant'|key: 'size'/)
+  assert.match(definitions, /optionalBooleanAttribute\(code, 'loading'\)/)
+  assert.match(definitions, /optionalBooleanAttribute\(code, 'disabled'\)/)
+  assert.match(definitions, /optionalStringAttribute\(code, 'type', 'button'\)/)
+})
+
+test('component heading presents architecture dimensions, version and prioritized introduction', () => {
+  assert.match(definitions, /dimensions: \['Primitive', 'Control', 'Source'\]/)
+  assert.match(definitions, /version: '1\.1\.0'/)
+  assert.match(definitions, /Safe async actions/)
+  assert.match(workbench, /definition\.dimensions/)
+  assert.match(workbench, /definition\.version/)
+  assert.match(workbench, /definition\.highlights/)
+  assert.doesNotMatch(workbench, /definition\.maturity|definition\.checks/)
+})
+
 test('overview provides a dedicated page for all relevant design tokens', () => {
   assert.match(definitions, /tokens: buttonTokens/)
   assert.match(tokenOverview, /Design tokens/)
@@ -30,9 +51,17 @@ test('overview is the unified component and markdown entry', () => {
   const overview = readFileSync('app/overview/[[...slug]]/page.tsx', 'utf8')
   assert.match(overview, /ExecutableComponentDoc/)
   assert.match(overview, /ReactMarkdown/)
-  assert.match(overview, /overview-nav/)
+  assert.match(overview, /DocsSidebar/)
   assert.match(overview, /\/overview\/tokens/)
   assert.match(overview, /DesignTokenOverview/)
+})
+
+test('documentation site consumes default tokens and Registry-delivered source', () => {
+  const styles = readFileSync('app/globals.css', 'utf8')
+  const layout = readFileSync('app/layout.tsx', 'utf8')
+  assert.match(styles, /@import "\.\.\/components\/bento\/theme\.css"/)
+  assert.match(layout, /components\/bento\/views\/Documentation/)
+  assert.ok(existsSync('components/bento/views/Documentation.tsx'))
 })
 
 test('Monaco virtual types provide the React JSX runtime', () => {

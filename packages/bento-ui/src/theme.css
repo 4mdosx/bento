@@ -7,27 +7,30 @@
    Layer 1: Raw palette (do not use in components; only referenced by semantic tokens)
    ------------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --background: #f7f5ed;
+  --foreground: #17201b;
+  --font-sans: Arial, Helvetica, sans-serif;
   --font-mono: var(--font-geist-mono, ui-monospace, monospace);
 
   /* Blue (primary) */
   --palette-blue-50: #eff6ff;
   --palette-blue-100: #dbeafe;
-  --palette-blue-500: #2563eb;
-  --palette-blue-600: #1d4ed8;
+  --palette-blue-500: #e85d3f;
+  --palette-blue-600: #d94d31;
 
   /* Gray (neutral, border, muted) */
-  --palette-gray-50: #f9fafb;
-  --palette-gray-100: #f3f4f6;
-  --palette-gray-200: #e5e7eb;
-  --palette-gray-300: #d1d5db;
-  --palette-gray-400: #9ca3af;
-  --palette-gray-500: #6b7280;
-  --palette-gray-700: #374151;
-  --palette-gray-800: #1f2937;
-  --palette-gray-900: #111827;
+  --palette-gray-50: #fffdf7;
+  --palette-gray-100: #f7f5ed;
+  --palette-gray-200: #e8eee6;
+  --palette-gray-300: #d8d9cd;
+  --palette-gray-400: #93a097;
+  --palette-gray-500: #5f6d64;
+  --palette-gray-700: #35423a;
+  --palette-gray-800: #243029;
+  --palette-gray-900: #17201b;
+
+  /* Green (supporting emphasis) */
+  --palette-green-600: #285943;
 
   /* Red (destructive) */
   --palette-red-600: #dc2626;
@@ -39,13 +42,32 @@
   --breakpoint-tablet: 640px;
   --breakpoint-screen: 1024px;
   --breakpoint-large: 1440px;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Framework-agnostic semantic tokens */
+  --surface: var(--palette-gray-50);
+  --surface-muted: var(--palette-gray-200);
+  --text-muted: var(--palette-gray-500);
+  --border: var(--palette-gray-300);
+  --accent: var(--palette-blue-500);
+  --accent-strong: var(--palette-blue-600);
+  --support: var(--palette-green-600);
+  --code-background: #18221c;
+  --code-foreground: #eff7ef;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.8rem;
+  --radius-lg: 1rem;
+  --radius-pill: 999px;
+  --content-width: 1120px;
+  --content-gutter: 1.25rem;
+  --header-height: 4rem;
+
+  /* Concise semantic aliases used by source-delivered presentation components. */
+  --ink: var(--foreground);
+  --muted: var(--text-muted);
+  --paper: var(--background);
+  --card: var(--surface);
+  --line: var(--border);
+  --green: var(--support);
 }
 
 /* -------------------------------------------------------------------------
@@ -58,11 +80,11 @@
   --font-mono: var(--font-mono);
 
   /* Semantic colors */
-  --color-primary: var(--palette-blue-600);
-  --color-primary-foreground: #ffffff;
-  --color-muted: var(--palette-gray-500);
+  --color-primary: var(--foreground);
+  --color-primary-foreground: var(--background);
+  --color-muted: var(--surface-muted);
   --color-muted-foreground: var(--palette-gray-500);
-  --color-border: var(--palette-gray-300);
+  --color-border: var(--border);
   --color-ring: var(--palette-gray-400);
   --color-destructive: var(--palette-red-600);
   --color-destructive-foreground: #ffffff;
@@ -86,6 +108,7 @@
 
 /* Base body (consuming apps can override in their own CSS) */
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);

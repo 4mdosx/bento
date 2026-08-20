@@ -4,7 +4,7 @@ export const componentCatalog = [
     name: 'Button',
     group: 'Primitive',
     maturity: 'ready',
-    description: 'Variants, sizes, labels and disabled behavior.',
+    description: 'Loading, disabled and native button behavior with className styling.',
   },
   {
     slug: 'list',

@@ -3,6 +3,17 @@
   "version": "1.0.0",
   "capabilities": [
     {
+      "name": "button",
+      "layer": "primitive",
+      "delivery": "source",
+      "entry": "registry/button/Button.tsx",
+      "dependencies": ["@radix-ui/react-slot"],
+      "exports": ["Button", "ButtonProps"],
+      "propsSchema": "ButtonHTMLAttributes<HTMLButtonElement> & { loading?: boolean; loadingIndicator?: ReactNode; asChild?: boolean }",
+      "examples": ["apps/docs/src/component-docs/definitions.tsx"],
+      "useCases": ["filterable-resource-list", "resource-detail"]
+    },
+    {
       "name": "list-host",
       "layer": "host",
       "delivery": "package",
@@ -56,6 +67,17 @@
       "propsSchema": "DashboardShellProps",
       "examples": ["apps/docs/app/layout.tsx"],
       "useCases": ["application-shell"]
+    },
+    {
+      "name": "documentation",
+      "layer": "view",
+      "delivery": "source",
+      "entry": "registry/documentation/Documentation.tsx",
+      "dependencies": [],
+      "exports": ["SiteHeader", "SiteFooter", "Page", "DocsLayout", "DocsSidebar", "CardGrid", "Card", "CodeBlock", "Callout"],
+      "propsSchema": "Semantic presentation props with ReactNode slots",
+      "examples": ["apps/docs/app/page.tsx", "apps/docs/app/getting-started/page.tsx"],
+      "useCases": ["documentation-site"]
     }
   ]
 }

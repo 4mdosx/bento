@@ -1,4 +1,5 @@
 import type { ListActions, ListModel, ListViewModel } from '../../src/hosts/list'
+import type { ButtonProps } from '../../src/views/primitives'
 
 type Resource = { id: string; name: string }
 
@@ -13,3 +14,9 @@ const viewModel: ListViewModel<Resource> = {
 }
 
 void [model, actions, viewModel]
+
+const button: ButtonProps = { type: 'button', loading: true, disabled: false, className: 'rounded-full' }
+// @ts-expect-error appearance variants belong in className, not the Button contract
+const buttonWithVariant: ButtonProps = { variant: 'solid' }
+
+void [button, buttonWithVariant]

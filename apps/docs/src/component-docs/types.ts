@@ -28,10 +28,10 @@ export interface DesignToken {
 export interface ComponentDefinition {
   slug: string
   name: string
-  group: 'Primitive' | 'Host + View' | 'Pattern + Runtime'
-  maturity: 'ready' | 'preview'
-  description: string
-  checks: string[]
+  version: string
+  dimensions: string[]
+  summary: string[]
+  highlights: Array<{ title: string; description: string }>
   tokens: DesignToken[]
   fields: SpecField[]
   defaultSpec: ComponentSpec
