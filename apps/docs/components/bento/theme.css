@@ -1,3 +1,11 @@
 @import "bento-ui/theme.css";
 
-/* Override semantic tokens for this application below. */
+/* Documentation-workbench-only colors; these are not public design tokens. */
+:root {
+  --intro-accent: #ff8a70;
+  --editor-background: #1e1e1e;
+  --editor-border: #3a3a3a;
+  --editor-muted: #bbbbbb;
+  --status-success: #8ed4a9;
+  --status-error: #ff9f8d;
+}

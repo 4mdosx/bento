@@ -64,6 +64,12 @@ test('documentation site consumes default tokens and Registry-delivered source',
   assert.ok(existsSync('components/bento/views/Documentation.tsx'))
 })
 
+test('documentation pages use runtime design tokens for visual primitives', () => {
+  const styles = readFileSync('app/globals.css', 'utf8')
+  assert.doesNotMatch(styles, /(?:font-size|line-height|font-family):\s*(?:[\d.]|clamp\(|ui-)/)
+  assert.doesNotMatch(styles, /(?:color|background|border-radius):\s*(?:#[\da-f]+|white|black|[\d.]+(?:px|rem))/i)
+})
+
 test('Monaco virtual types provide the React JSX runtime', () => {
   const editor = readFileSync('src/component-docs/MonacoCodeEditor.tsx', 'utf8')
   assert.match(editor, /declare module 'react\/jsx-runtime'/)
