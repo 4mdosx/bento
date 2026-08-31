@@ -1,6 +1,6 @@
 'use client'
 
-import type { ListHostValue } from 'bento-ui/hosts/list'
+import type { ListHostValue } from 'bento-kit/hosts/list'
 
 export function ListView<Item>({ host, renderItem }: { host: ListHostValue<Item>; renderItem: (item: Item) => React.ReactNode }) {
   if (host.isLoading) return <p role="status">Loading…</p>

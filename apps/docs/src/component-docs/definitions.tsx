@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from 'bento-ui'
+import { Button } from 'bento-kit'
 import type { ComponentDefinition, ComponentSpec } from './types'
 import { buttonTokens, detailTokens, listTokens } from './design-tokens'
 import { DetailExample } from './examples/DetailExample'
@@ -69,7 +69,7 @@ export const componentDefinitions: ComponentDefinition[] = [
       { key: 'disabled', label: 'Disabled', kind: 'boolean' },
     ],
     defaultSpec: { content: 'Save changes', type: 'button', loading: false, disabled: false },
-    toCode: (spec) => `import { Button } from 'bento-ui'\n\nexport function Example() {\n  return (\n    <Button\n      type=${JSON.stringify(spec.type)}\n      loading={${Boolean(spec.loading)}}\n      disabled={${Boolean(spec.disabled)}}\n      className="rounded-full"\n    >\n      ${String(spec.content)}\n    </Button>\n  )\n}`,
+    toCode: (spec) => `import { Button } from 'bento-kit'\n\nexport function Example() {\n  return (\n    <Button\n      type=${JSON.stringify(spec.type)}\n      loading={${Boolean(spec.loading)}}\n      disabled={${Boolean(spec.disabled)}}\n      className="rounded-full"\n    >\n      ${String(spec.content)}\n    </Button>\n  )\n}`,
     fromCode: (code) => ({
       type: assertOption(optionalStringAttribute(code, 'type', 'button'), ['button', 'submit', 'reset'], 'type'),
       loading: optionalBooleanAttribute(code, 'loading'),

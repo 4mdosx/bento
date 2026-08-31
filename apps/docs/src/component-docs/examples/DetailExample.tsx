@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Button, DetailPresentation } from 'bento-ui'
+import { Button, DetailPresentation } from 'bento-kit'
 
 export function DetailExample({ title, open: requestedOpen }: { title: string; open: boolean }) {
   const [open, setOpen] = React.useState(requestedOpen)

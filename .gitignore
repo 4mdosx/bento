@@ -52,3 +52,7 @@ roadmaps/
 
 # references
 references/
+
+# packed into bento-kit on prepack; source of truth remains /registry
+packages/bento-kit/registry/
+*.tgz

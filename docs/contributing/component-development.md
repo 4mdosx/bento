@@ -40,8 +40,8 @@ At minimum, add a public type assertion and a responsibility-boundary test. Stat
 
 ## 6. Documentation and delivery
 
-Update `registry/registry.json`, `packages/bento-ui/manifest.json`, the relevant Use Case, Agent recipe and customer-facing docs. Registry execution must remain repeatable and protect local modifications.
+Update `registry/registry.json`, `packages/bento-kit/manifest.json`, the relevant Use Case, Agent recipe (`docs/agent`) and customer-facing docs in `apps/docs`. Registry execution must remain repeatable and protect local modifications. Owner runbooks stay in `docs/`, not the documentation site.
 
 ## 7. Review and release
 
-Run `npm run verify`. Include the docs component route, mapped spec fields, tested states, public API change and delivery mode in the pull request. Breaking frozen architecture requires a new ADR and Preview version change.
+Run `npm run verify`. Include the docs component route, mapped spec fields, tested states, public API change and delivery mode in the pull request. Breaking frozen architecture requires a new ADR under `docs/adr` and Preview version change. Publishing follows `docs/operations.md`.

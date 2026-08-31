@@ -53,9 +53,10 @@ test('overview provides a dedicated page for all relevant design tokens', () => 
   assert.match(tokens, /--color-destructive/)
 })
 
-test('component contribution workflow is published by docs', () => {
-  const workflow = 'content/docs/contributing/component-development.md'
+test('component contribution workflow lives in the repository', () => {
+  const workflow = '../../docs/contributing/component-development.md'
   assert.ok(existsSync(workflow))
+  assert.equal(existsSync('content/docs/contributing/component-development.md'), false)
   assert.match(readFileSync(workflow, 'utf8'), /spec → code and code → spec/)
 })
 

@@ -1,6 +1,6 @@
 # Contributing to Bento
 
-Bento accepts capabilities, not isolated component inventory. Start with a documented Use Case and read `apps/docs/content/docs/agent/index.md` plus `apps/docs/content/docs/contributing/component-development.md`.
+Bento accepts capabilities, not isolated component inventory. Start with a documented Use Case and read `docs/agent/index.md` plus `docs/contributing/component-development.md`.
 
 ## Required flow
 
@@ -10,6 +10,6 @@ Bento accepts capabilities, not isolated component inventory. Start with a docum
 4. Add the capability to the docs component catalog and create a spec-mapped executable component route with representative states.
 5. Add public type, interaction, accessibility and dependency-boundary checks in proportion to the change.
 6. Update the manifest, customer documentation and Agent recipe together.
-7. Run `npm run verify` at repository root.
+7. Run `npm run verify` at repository root. Before a npm release, follow `docs/operations.md` (local `--local` vs `preview` publish).
 
 Pull requests must complete `.github/pull_request_template.md`. A component is not complete when it merely renders; it is complete when its contract, failure states, responsive behavior, accessibility and delivery path can be reviewed.

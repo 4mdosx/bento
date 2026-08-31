@@ -1,5 +1,5 @@
 'use client'
 
-import { DetailPresentation } from 'bento-ui/views'
+import { DetailPresentation } from 'bento-kit/views'
 
 export const DetailView = DetailPresentation

@@ -22,7 +22,7 @@ npm run dev
 
 `npm run dev` 与 `npm run dev:docs` 均启动 docs，默认地址为 `http://localhost:3000`。
 
-新组件必须遵循 `CONTRIBUTING.md` 与 `apps/docs/content/docs/contributing/component-development.md`：先确定 Use Case
+新组件必须遵循 `CONTRIBUTING.md` 与 `docs/contributing/component-development.md`：先确定 Use Case
 和交付边界，再实现契约、加入 spec 映射的可执行组件文档、补齐自动门禁与文档。
 
 启动文档站（使用说明、组件文档、项目定位与冻结架构）：
@@ -31,9 +31,7 @@ npm run dev
 npm run dev:docs
 ```
 
-最小 MVP 路径：安装 `bento-ui@0.1.0-preview.0`，运行 `bento init` 与
-`bento add list`，定义 List Model/Actions，再由 ListHost 连接生成的 View。
-完整说明位于 `apps/docs`。
+最小 MVP 路径见 [操作手册](docs/operations.md)：开发自测用 `npx bento init ../my-app --local`；对外发布走 `preview` tag，不要为了自测 `npm publish`。
 
 根级命令：
 
@@ -42,14 +40,16 @@ npm run dev:docs
 - `npm test`：运行现有自动化测试。
 - `npm run build`：执行生产构建。
 - `npm run verify`：依次执行以上全部质量门禁。
+- `npm run pack:smoke`：用真实 tarball 跑一遍 `init`（发版前）。
 
 ## 📁 仓库结构
 
 ```
 bento/
-├── apps/docs/          # 文档站、可执行组件验证与示例
-├── packages/bento-ui/  # Host、Next 集成、UI Runtime 和 View
-├── cli/                # 当前 CLI 入口，后续迁移为 workspace package
+├── apps/docs/          # 面向用户的文档站、可执行组件验证与示例
+├── docs/               # 给仓库 owner 的操作手册、ADR、Agent 配方
+├── packages/bento-kit/ # CLI、Host、Next 集成、UI Runtime 和 View
+├── registry/           # 源码交付的 Primitive / View
 ├── roadmap/            # 本地开发计划，不进入 Git
 └── package.json        # workspace 与开发命令
 ```

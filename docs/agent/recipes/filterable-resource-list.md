@@ -1,6 +1,6 @@
 # 创建可筛选资源列表
 
-1. 运行 `bento init` 与 `bento add list`。
+1. 运行 `bento init`。启动模板已包含 `list`；如需补写可再执行 `bento add list`。
 2. 定义资源类型、稳定的 `getKey` 和初始 `ListQuery`。
 3. 实现接收 `AbortSignal` 的 query Action；把搜索、筛选、排序和分页发送给数据源。
 4. 用 `ListHost` 包住生成的 `ListView`，提供移动条目和桌面列映射。

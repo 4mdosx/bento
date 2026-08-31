@@ -10,6 +10,7 @@ module.exports = function doctor(options = {}) {
   const packageJson = fs.existsSync(packagePath) ? JSON.parse(fs.readFileSync(packagePath, 'utf8')) : {}
   const deps = { ...packageJson.dependencies, ...packageJson.devDependencies }
   check('Next.js App Router', Boolean(deps.next), deps.next || 'next is not installed')
+  check('bento-kit', Boolean(deps['bento-kit']), deps['bento-kit'] || 'bento-kit is not installed')
   const configPath = path.join(cwd, 'bento.json')
   check('Bento config', fs.existsSync(configPath), configPath)
   if (fs.existsSync(configPath)) {

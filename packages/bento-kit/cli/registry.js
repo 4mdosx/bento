@@ -1,8 +1,9 @@
 const fs = require('node:fs')
 const path = require('node:path')
 const crypto = require('node:crypto')
+const { registryRoot } = require('./paths')
 
-const root = path.resolve(__dirname, '../registry')
+const root = registryRoot()
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'registry.json'), 'utf8'))
 const hash = (content) => crypto.createHash('sha256').update(content).digest('hex')
 

@@ -16,7 +16,7 @@ declare module 'react/jsx-runtime' {
   export function jsx(type: unknown, props: unknown, key?: string): JSX.Element
   export function jsxs(type: unknown, props: unknown, key?: string): JSX.Element
 }
-declare module 'bento-ui' {
+declare module 'bento-kit' {
   export interface ButtonProps {
     type?: 'button' | 'submit' | 'reset'
     loading?: boolean
@@ -45,7 +45,7 @@ export function MonacoCodeEditor({ slug, value, onChange }: { slug: string; valu
       moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
       target: monaco.languages.typescript.ScriptTarget.ES2022,
     })
-    monaco.languages.typescript.typescriptDefaults.addExtraLib(declarations, 'file:///bento-ui.d.ts')
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(declarations, 'file:///bento-kit.d.ts')
   }
 
   return <Editor

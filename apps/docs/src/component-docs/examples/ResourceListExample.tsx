@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { ListHost, type ListActions, type ListModel } from 'bento-ui/hosts/list'
-import { ListContainer } from 'bento-ui/views'
+import { ListHost, type ListActions, type ListModel } from 'bento-kit/hosts/list'
+import { ListContainer } from 'bento-kit/views'
 
 interface Resource {
   id: string

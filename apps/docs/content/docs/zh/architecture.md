@@ -5,7 +5,7 @@ Bento 当前只面向 Next.js App Router。目录按运行职责和交付边界�
 ## 目录树
 
 ```text
-packages/bento-ui/src/
+packages/bento-kit/src/
 ├── core/                  # 预留：无 UI 的共享契约与错误类型
 ├── hosts/                 # 包交付：状态、View Model 与副作用协调
 │   └── list/
@@ -106,10 +106,10 @@ hosts       ui-runtime       integrations/next
 用户代码优先从职责明确的子路径导入：
 
 ```ts
-import { ListHost } from 'bento-ui/hosts/list'
-import { useDetailState } from 'bento-ui/integrations/next'
-import { OverlayProvider } from 'bento-ui/ui-runtime/overlay'
-import { ListContainer } from 'bento-ui/views'
+import { ListHost } from 'bento-kit/hosts/list'
+import { useDetailState } from 'bento-kit/integrations/next'
+import { OverlayProvider } from 'bento-kit/ui-runtime/overlay'
+import { ListContainer } from 'bento-kit/views'
 ```
 
 根入口暂时保留现有聚合导出，以降低目录迁移造成的兼容性影响。

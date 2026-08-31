@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 }
 
 function itemLabel(section: string) {
-  return ({ zh: '使用与设计', adr: '架构决策', agent: 'Agent 资料', contributing: '贡献流程' } as Record<string, string>)[section] ?? section
+  return ({ zh: '使用说明' } as Record<string, string>)[section] ?? section
 }
 
 export default async function OverviewPage({ params }: { params: Promise<{ slug?: string[] }> }) {
@@ -63,5 +63,5 @@ export default async function OverviewPage({ params }: { params: Promise<{ slug?
 }
 
 function OverviewIndex({ docsCount }: { docsCount: number }) {
-  return <div className="overview-index"><span className="eyebrow">Overview</span><h1>组件与项目文档</h1><p className="lead">从左侧选择组件进行交互验证，或阅读使用、架构和贡献文档。</p><div className="overview-summary"><Link href="/overview/components/button"><strong>3 个组件实验</strong><span>编辑 spec 或代码并查看实时预览。</span></Link><Link href="/overview/docs/zh/architecture"><strong>{docsCount} 篇项目文档</strong><span>使用说明、概念、架构决策与贡献流程。</span></Link></div></div>
+  return <div className="overview-index"><span className="eyebrow">Overview</span><h1>组件与使用文档</h1><p className="lead">从左侧选择组件进行交互验证，或阅读使用说明与架构文档。</p><div className="overview-summary"><Link href="/overview/components/button"><strong>3 个组件实验</strong><span>编辑 spec 或代码并查看实时预览。</span></Link><Link href="/overview/docs/zh/architecture"><strong>{docsCount} 篇使用文档</strong><span>快速开始、概念、Use Case 与架构说明。</span></Link></div></div>
 }

@@ -1,17 +1,33 @@
 #! /usr/bin/env node
+const path = require('node:path')
 const { Command } = require('commander')
 const init = require('./init')
 const { add, diff, manifest } = require('./registry')
 const doctor = require('./doctor')
 
 const program = new Command()
-program.name('bento').description('Deliver Bento application UI source').version('0.0.1')
+program.name('bento').description('Deliver Bento application UI source').version('0.1.0-preview.1')
 
 program.command('init')
-  .description('Initialize Bento in a Next.js App Router project')
+  .description('Create a Next.js App Router project with Bento Kit')
   .argument('[project-name]', 'project directory', '.')
   .option('--dry-run', 'show the planned change')
-  .action((name, options) => console.log(init(name, options)))
+  .option('--local', 'depend on this checkout of bento-kit via file:')
+  .option('--skip-install', 'skip npm install')
+  .option('--skip-git', 'skip git init')
+  .action((name, options) => {
+    const result = init(name, options)
+    if (options.dryRun) {
+      console.log(JSON.stringify(result, null, 2))
+      return
+    }
+    const relative = path.relative(process.cwd(), result.path) || '.'
+    console.log(`ready     ${relative}`)
+    if (result.git) console.log('created   .git')
+    if (result.installed) console.log('installed dependencies')
+    for (const item of result.registryItems) console.log(`copied    ${item}`)
+    console.log(`next      cd ${relative} && npm run dev`)
+  })
 
 program.command('add')
   .description('Add a primitive or view from the registry')

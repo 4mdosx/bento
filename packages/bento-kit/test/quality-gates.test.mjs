@@ -14,7 +14,7 @@ test('agent manifest describes every capability with actionable metadata', () =>
 })
 
 test('fixed agent recipe states safety and verification constraints', () => {
-  const recipe = readFileSync('../../apps/docs/content/docs/agent/recipes/filterable-resource-list.md', 'utf8')
+  const recipe = readFileSync('../../docs/agent/recipes/filterable-resource-list.md', 'utf8')
   assert.match(recipe, /不要复制 `useListHost`/)
   assert.match(recipe, /npm run verify/)
   assert.match(recipe, /窄\/宽断点/)

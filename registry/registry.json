@@ -4,9 +4,9 @@
   "items": [
     { "name": "button", "type": "primitive", "version": "1.1.0", "dependencies": { "@radix-ui/react-slot": "^1.2.4" }, "files": [{ "source": "button/Button.tsx", "target": "primitives/Button.tsx" }] },
     { "name": "form", "type": "primitive", "version": "1.0.0", "dependencies": {}, "files": [{ "source": "form/FormField.tsx", "target": "primitives/FormField.tsx" }] },
-    { "name": "list", "type": "view", "version": "1.0.0", "dependencies": { "bento-ui": "^0.1.0-preview.0" }, "files": [{ "source": "list/ListView.tsx", "target": "views/ListView.tsx" }] },
+    { "name": "list", "type": "view", "version": "1.0.0", "dependencies": { "bento-kit": "^0.1.0-preview.1" }, "files": [{ "source": "list/ListView.tsx", "target": "views/ListView.tsx" }] },
     { "name": "dashboard-shell", "type": "view", "version": "1.0.0", "dependencies": {}, "files": [{ "source": "dashboard-shell/DashboardShell.tsx", "target": "views/DashboardShell.tsx" }] },
-    { "name": "detail", "type": "view", "version": "1.0.0", "dependencies": { "bento-ui": "^0.1.0-preview.0" }, "files": [{ "source": "detail/DetailView.tsx", "target": "views/DetailView.tsx" }] },
+    { "name": "detail", "type": "view", "version": "1.0.0", "dependencies": { "bento-kit": "^0.1.0-preview.1" }, "files": [{ "source": "detail/DetailView.tsx", "target": "views/DetailView.tsx" }] },
     { "name": "documentation", "type": "view", "version": "1.0.0", "dependencies": {}, "files": [{ "source": "documentation/Documentation.tsx", "target": "views/Documentation.tsx" }] }
   ]
 }
