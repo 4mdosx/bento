@@ -73,6 +73,9 @@
   --radius-md: 0.8rem;
   --radius-lg: 1rem;
   --radius-pill: 999px;
+  --duration-fast: 150ms;
+  --duration-default: 200ms;
+  --duration-overlay: 300ms;
   --content-width: 1120px;
   --content-gutter: 1.25rem;
   --header-height: 4rem;
@@ -120,6 +123,19 @@
   --text-body-sm--line-height: var(--leading-body-sm);
   --text-caption: var(--font-size-caption);
   --text-caption--line-height: var(--leading-caption);
+
+  /* Semantic radius (use: rounded-sm, rounded-md, rounded-lg, rounded-full) */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-pill);
+
+  /* Semantic motion (use: duration-fast, duration-default, duration-overlay) */
+  --duration-fast: var(--duration-fast);
+  --duration-default: var(--duration-default);
+  --duration-overlay: var(--duration-overlay);
+  --default-transition-duration: var(--duration-fast);
+  --default-animation-duration: var(--duration-overlay);
 }
 
 /* -------------------------------------------------------------------------

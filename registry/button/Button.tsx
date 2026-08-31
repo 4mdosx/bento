@@ -47,7 +47,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
     aria-busy={loading || undefined}
     data-loading={loading ? '' : undefined}
     tabIndex={asChild && interactionDisabled ? -1 : tabIndex}
-    className={`inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4 text-body-sm font-medium text-primary-foreground transition-colors hover:opacity-90 active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 ${className}`.trim()}
+    className={`inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4 text-body-sm font-medium text-primary-foreground transition-colors duration-fast hover:opacity-90 active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 ${className}`.trim()}
     onClick={handleClick}
   >
     {loading ? loadingIndicator ?? <DefaultLoadingIndicator /> : null}

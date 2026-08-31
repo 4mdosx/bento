@@ -35,10 +35,22 @@ test('component heading presents architecture dimensions, version and prioritize
 })
 
 test('overview provides a dedicated page for all relevant design tokens', () => {
+  const tokens = readFileSync('src/component-docs/design-tokens.ts', 'utf8')
   assert.match(definitions, /tokens: buttonTokens/)
   assert.match(tokenOverview, /Design tokens/)
   assert.match(tokenOverview, /TokenSample/)
   assert.match(tokenOverview, /designTokens\.filter/)
+  assert.match(tokenOverview, /duration: '动效时长'/)
+  assert.match(tokenOverview, /radius: '圆角'/)
+  assert.match(tokens, /--radius-sm/)
+  assert.match(tokens, /--radius-md/)
+  assert.match(tokens, /--radius-lg/)
+  assert.match(tokens, /--radius-pill/)
+  assert.match(tokens, /--duration-fast/)
+  assert.match(tokens, /--duration-default/)
+  assert.match(tokens, /--duration-overlay/)
+  assert.match(tokens, /--text-display-lg/)
+  assert.match(tokens, /--color-destructive/)
 })
 
 test('component contribution workflow is published by docs', () => {

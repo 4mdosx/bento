@@ -45,12 +45,34 @@ test('Tailwind theme variables are not consumed as runtime CSS variables', () =>
   assert.ok(themeDeclaration)
 
   const themeVariables = Array.from(themeDeclaration.matchAll(/^\s*(--[\w-]+):/gm), (match) => match[1])
+  const rootDeclaration = theme.match(/:root\s*\{[\s\S]*?\n\}/)?.[0] ?? ''
+  const runtimeAliases = new Set(Array.from(rootDeclaration.matchAll(/^\s*(--[\w-]+):/gm), (match) => match[1]))
   const runtimeCss = [
     theme.replace(themeDeclaration, ''),
     readFileSync('../../apps/docs/app/globals.css', 'utf8'),
   ].join('\n')
 
   for (const variable of themeVariables) {
+    if (runtimeAliases.has(variable)) continue
     assert.doesNotMatch(runtimeCss, new RegExp(`var\\(${variable.replaceAll('-', '\\-')}(?:[,\\)])`), `${variable} is build-time only`)
   }
+})
+
+test('radius and duration tokens are runtime values mapped into the Tailwind theme', () => {
+  const theme = readFileSync('src/theme.css', 'utf8')
+  const themeDeclaration = theme.match(/@theme inline\s*\{[\s\S]*?\n\}/)?.[0]
+  assert.ok(themeDeclaration)
+
+  for (const variable of ['--radius-sm', '--radius-md', '--radius-lg', '--radius-pill', '--duration-fast', '--duration-default', '--duration-overlay']) {
+    assert.match(theme, new RegExp(`${variable.replaceAll('-', '\\-')}:`))
+  }
+  assert.match(themeDeclaration, /--radius-sm:\s*var\(--radius-sm\)/)
+  assert.match(themeDeclaration, /--radius-md:\s*var\(--radius-md\)/)
+  assert.match(themeDeclaration, /--radius-lg:\s*var\(--radius-lg\)/)
+  assert.match(themeDeclaration, /--radius-full:\s*var\(--radius-pill\)/)
+  assert.match(themeDeclaration, /--duration-fast:\s*var\(--duration-fast\)/)
+  assert.match(themeDeclaration, /--duration-default:\s*var\(--duration-default\)/)
+  assert.match(themeDeclaration, /--duration-overlay:\s*var\(--duration-overlay\)/)
+  assert.match(themeDeclaration, /--default-transition-duration:\s*var\(--duration-fast\)/)
+  assert.match(themeDeclaration, /--default-animation-duration:\s*var\(--duration-overlay\)/)
 })

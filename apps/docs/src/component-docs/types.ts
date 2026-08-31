@@ -16,7 +16,7 @@ export interface SpecField {
   help?: string
 }
 
-export type DesignTokenKind = 'color' | 'typography' | 'radius' | 'spacing' | 'breakpoint'
+export type DesignTokenKind = 'color' | 'typography' | 'radius' | 'duration' | 'spacing' | 'breakpoint'
 
 export interface DesignToken {
   name: string
