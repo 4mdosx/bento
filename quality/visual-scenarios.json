@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost:3000",
+  "baseUrl": "http://localhost:5900",
   "scenarios": [
     { "name": "button-states", "path": "/overview/components/button", "width": 1024, "height": 900, "expects": ["Button", "Loading", "Disabled"] },
     { "name": "list-mobile", "path": "/list", "width": 390, "height": 844, "expects": ["Resource cards", "Search resources"] },

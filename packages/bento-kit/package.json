@@ -26,14 +26,14 @@
     "prepack": "npm run build && node scripts/copy-registry.mjs"
   },
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
-    "./core": { "types": "./dist/core/index.d.ts", "import": "./dist/core/index.js" },
-    "./hosts": { "types": "./dist/hosts/index.d.ts", "import": "./dist/hosts/index.js" },
-    "./hosts/list": { "types": "./dist/hosts/list/index.d.ts", "import": "./dist/hosts/list/index.js" },
-    "./integrations/next": { "types": "./dist/integrations/next/index.d.ts", "import": "./dist/integrations/next/index.js" },
-    "./ui-runtime": { "types": "./dist/ui-runtime/index.d.ts", "import": "./dist/ui-runtime/index.js" },
-    "./ui-runtime/overlay": { "types": "./dist/ui-runtime/overlay/index.d.ts", "import": "./dist/ui-runtime/overlay/index.js" },
-    "./views": { "types": "./dist/views/index.d.ts", "import": "./dist/views/index.js" },
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" },
+    "./core": { "types": "./dist/core/index.d.ts", "import": "./dist/core/index.js", "default": "./dist/core/index.js" },
+    "./hosts": { "types": "./dist/hosts/index.d.ts", "import": "./dist/hosts/index.js", "default": "./dist/hosts/index.js" },
+    "./hosts/list": { "types": "./dist/hosts/list/index.d.ts", "import": "./dist/hosts/list/index.js", "default": "./dist/hosts/list/index.js" },
+    "./integrations/next": { "types": "./dist/integrations/next/index.d.ts", "import": "./dist/integrations/next/index.js", "default": "./dist/integrations/next/index.js" },
+    "./ui-runtime": { "types": "./dist/ui-runtime/index.d.ts", "import": "./dist/ui-runtime/index.js", "default": "./dist/ui-runtime/index.js" },
+    "./ui-runtime/overlay": { "types": "./dist/ui-runtime/overlay/index.d.ts", "import": "./dist/ui-runtime/overlay/index.js", "default": "./dist/ui-runtime/overlay/index.js" },
+    "./views": { "types": "./dist/views/index.d.ts", "import": "./dist/views/index.js", "default": "./dist/views/index.js" },
     "./manifest.json": "./manifest.json",
     "./theme.css": "./dist/theme.css"
   },

@@ -72,9 +72,9 @@ function appManifest(projectName, version, options = {}) {
     version: '0.1.0',
     private: true,
     scripts: {
-      dev: 'next dev',
+      dev: 'next dev --port 6000',
       build: 'next build',
-      start: 'next start',
+      start: 'next start --port 6000',
       lint: 'eslint',
       typecheck: 'tsc --noEmit',
     },

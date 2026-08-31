@@ -45,13 +45,14 @@ db-data.json
 local.db
 local.remote.db
 /public/uploads
-roadmaps/
-/roadmap/
 # config
 .env
 
 # references
 references/
+
+# local design drafts, not published
+dev-docs/
 
 # packed into bento-kit on prepack; source of truth remains /registry
 packages/bento-kit/registry/

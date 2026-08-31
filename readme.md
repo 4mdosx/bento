@@ -12,26 +12,13 @@
 ```bash
 npm install
 npm run verify
-```
-
-启动统一 docs（包含使用说明、组件验证、项目定位与项目文档）：
-
-```bash
 npm run dev
 ```
-
-`npm run dev` 与 `npm run dev:docs` 均启动 docs，默认地址为 `http://localhost:3000`。
 
 新组件必须遵循 `CONTRIBUTING.md` 与 `docs/contributing/component-development.md`：先确定 Use Case
 和交付边界，再实现契约、加入 spec 映射的可执行组件文档、补齐自动门禁与文档。
 
-启动文档站（使用说明、组件文档、项目定位与冻结架构）：
-
-```bash
-npm run dev:docs
-```
-
-最小 MVP 路径见 [操作手册](docs/operations.md)：开发自测用 `npx bento init ../my-app --local`；对外发布走 `preview` tag，不要为了自测 `npm publish`。
+开发最小 MVP 路径见 [操作手册](docs/operations.md)
 
 根级命令：
 

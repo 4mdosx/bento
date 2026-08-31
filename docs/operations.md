@@ -25,16 +25,54 @@ npm run verify
 ### 2. 用本地 CLI 建项目
 
 ```bash
-npx bento init ../my-app --local
+npm run bento -- init ../my-app --local
 cd ../my-app
 npm run dev
 ```
 
-`--local` 会把新项目的 `bento-kit` 写成 `file:<本仓库>/packages/bento-kit`。改 Host、CLI 或模板后，回到应用目录再 `npm install` 或重启 `npm run dev` 即可。
+应用默认 http://localhost:6000。本仓库文档站 `npm run dev` 默认 http://localhost:5900。
 
-不要在这一步写 `npx bento-kit@0.1.0-preview.1`：那个版本此时不在 npm 上，或不是你刚改的代码。
+`--` 后面才是传给 CLI 的参数。项目目录用 `../my-app`，不要写成本仓库里面的子目录。
 
-### 3. 在新项目里继续
+`--local` 会把新项目的 `bento-kit` 写成 `file:<本仓库>/packages/bento-kit`。不要在这一步写 `npx bento-kit@0.1.0-preview.1`：那个版本此时不在 npm 上，或不是你刚改的代码。
+
+### 3. 本仓库更新后，本地应用怎么吃到最新代码
+
+`--local` 应用不会自动跟着 git pull。按你改的层面对症处理；三种改动互不影响。
+
+**包层（Host、UI Runtime、`theme.css`、CLI）**
+
+应用从 `bento-kit` 的 `dist/` 和 `cli/` 引用，改 `src/` 之后必须先构建：
+
+```bash
+# 在 bento 仓库
+npm run build -w bento-kit
+
+# 在 --local 应用
+npm install
+npm run dev
+```
+
+`file:` 一般是 symlink，构建完重启 `dev` 即可。若 `package.json` 的依赖有变，应用里必须再跑一次 `npm install`。
+
+**Registry 视图（`registry/` 里的 Button、ListView 等）**
+
+这些文件在 `init` / `add` 时已经拷进应用的 `components/bento/`，改仓库不会覆盖你的业务改动。要同步上游：
+
+```bash
+# 在 --local 应用
+npx bento diff list
+npx bento add list            # 无本地改动时更新
+npx bento add list --overwrite  # 接受用仓库版本盖掉本地修改
+```
+
+`bento add` 优先读 `packages/bento-kit/registry/`（`prepack` / `pack:smoke` 留下的副本）。若怀疑不是最新，先删掉该目录，CLI 会改用仓库根的 `registry/`。
+
+**init 模板（`packages/bento-kit/templates/next-app`）**
+
+只作用于下一次 `init`。已经建好的应用（`app/layout.tsx`、`app/page.tsx` 等）不会被更新，需要对着模板手改，或新建一个项目对照。
+
+### 4. 在新项目里继续
 
 ```bash
 npx bento doctor
@@ -42,9 +80,9 @@ npx bento add detail
 npx bento add documentation
 ```
 
-业务从 `app/page.tsx` 的 List Model / Actions 开始改。View 源码在 `components/bento/`。
+业务从 `app/page.tsx` 的 List Model / Actions 开始改。View 源码在 `components/bento/`。此时应用已经依赖本地 `bento-kit`，`npx bento doctor` 会走 `node_modules/.bin/bento`，不再访问 npm 上的 `bento` 包。
 
-### 4. 发版前冒烟（仍不发布）
+### 5. 发版前冒烟（仍不发布）
 
 测的是用户真正会装到的 tarball（`files`、`prepack`、CLI、Registry），不是 monorepo 里的 `src/`。
 

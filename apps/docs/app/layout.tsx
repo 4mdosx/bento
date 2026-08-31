@@ -4,7 +4,7 @@ import { SiteFooter, SiteHeader } from '../components/bento/views/Documentation'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:5900'),
   title: { default: 'Bento UI', template: '%s · Bento UI' },
   description: 'A model-driven Application UI Toolkit for Next.js App Router.',
   openGraph: {

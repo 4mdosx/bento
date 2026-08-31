@@ -18,6 +18,7 @@
     "verify:package": "node scripts/verify-package.mjs",
     "verify:agent": "node scripts/evaluate-agent.mjs",
     "pack:smoke": "node scripts/pack-smoke.mjs",
+    "bento": "node packages/bento-kit/cli/command.js",
     "test": "node --test packages/bento-kit/cli/test/*.test.js && npm run test --workspaces --if-present",
     "verify": "npm run lint && npm run typecheck && npm run test && npm run build && npm run verify:package && npm run verify:agent"
   },

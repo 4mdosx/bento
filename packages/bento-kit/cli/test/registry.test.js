@@ -20,7 +20,7 @@ test('init scaffolds a Next.js app with base UI', () => {
   assert.equal(fs.existsSync(path.join(cwd, 'components/bento/views/DashboardShell.tsx')), true)
   const packageJson = JSON.parse(fs.readFileSync(path.join(cwd, 'package.json'), 'utf8'))
   assert.equal(packageJson.dependencies['bento-kit'].startsWith('^0.1.0-preview.'), true)
-  assert.equal(packageJson.dependencies.next, '16.1.6')
+  assert.equal(packageJson.scripts.dev, 'next dev --port 6000')
   assert.equal(fs.readFileSync(path.join(cwd, 'components/bento/theme.css'), 'utf8').startsWith('@import "bento-kit/theme.css";'), true)
   assert.match(fs.readFileSync(path.join(cwd, 'app/page.tsx'), 'utf8'), /ListHost/)
   assert.equal(doctor({ cwd }).ok, true)
